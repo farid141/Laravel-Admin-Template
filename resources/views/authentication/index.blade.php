@@ -33,13 +33,21 @@
                     <form method="POST">
                         @csrf
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="text" class="form-control form-control-xl" placeholder="Username">
+                            <input type="text"
+                                class="form-control form-control-xl @error('name')
+                                is-invalid
+                            @enderror"
+                                placeholder="Name" name="name">
                             <div class="form-control-icon">
                                 <i class="bi bi-person"></i>
                             </div>
+                            @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="password" class="form-control form-control-xl" placeholder="Password">
+                            <input type="password" class="form-control form-control-xl" placeholder="Password"
+                                name="password">
                             <div class="form-control-icon">
                                 <i class="bi bi-shield-lock"></i>
                             </div>

@@ -9,12 +9,15 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\SubmenuController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/login', [LoginController::class, 'index']);
+Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'store']);
+Route::get('/logout', [LoginController::class, 'logout']);
 
-Route::get('/dashboard', [DashboardController::class, 'index']);
-Route::resource('/menu', MenuController::class);
-Route::resource('/submenu', SubmenuController::class)->except(['show', 'create']);
-Route::resource('/books', BookController::class);
-Route::resource('/disks', DiskController::class);
-Route::resource('/members', MemberController::class);
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', [DashboardController::class, 'index']);
+    Route::resource('/menu', MenuController::class);
+    Route::resource('/submenu', SubmenuController::class)->except(['show', 'create']);
+    Route::resource('/books', BookController::class);
+    Route::resource('/disks', DiskController::class);
+    Route::resource('/members', MemberController::class);
+});
