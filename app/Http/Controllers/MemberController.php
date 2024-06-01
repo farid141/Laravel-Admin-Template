@@ -9,6 +9,8 @@ class MemberController extends Controller
 {
     public function __construct()
     {
+        Session::put('page_title', 'Member');
+
         Session::put('menu', 'members');
         Session::put('submenu', 'members');
     }

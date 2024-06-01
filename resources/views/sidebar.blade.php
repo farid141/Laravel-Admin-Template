@@ -78,7 +78,23 @@
                     </li>
                 @endforeach
 
-                <li class="sidebar-title">Administrator</li>
+                <li class="sidebar-title">Administration</li>
+
+                <li class="sidebar-item has-sub @if ($menu_session == 'menu') active @endif">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-stack"></i>
+                        <span>Menu<span>
+                    </a>
+
+                    <ul class="submenu active">
+                        <li class="submenu-item @if ($submenu_session == 'menu') active @endif">
+                            <a href="/menu" class="submenu-link">{{ 'menu' }}</a>
+                        </li>
+                        <li class="submenu-item @if ($submenu_session == 'submenu') active @endif">
+                            <a href="/submenu" class="submenu-link">{{ 'submenu' }}</a>
+                        </li>
+                    </ul>
+                </li>
 
                 <li class="sidebar-item ">
                     <a href="table.html" class='sidebar-link'>

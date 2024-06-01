@@ -9,6 +9,8 @@ class BookController extends Controller
 {
     public function __construct()
     {
+        Session::put('page_title', 'Book');
+
         Session::put('menu', 'items');
         Session::put('submenu', 'books');
     }

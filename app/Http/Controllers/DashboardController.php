@@ -9,6 +9,8 @@ class DashboardController extends Controller
 {
     public function __construct()
     {
+        Session::put('page_title', 'Dashboard');
+
         Session::put('menu', 'dashboard');
         Session::put('submenu', '');
     }
