@@ -108,6 +108,12 @@
             $('#create-submenu-form').submit(function(e) {
                 e.preventDefault();
                 var formData = new FormData(this);
+                var formElement = $(this);
+
+                // Clear previous errors
+                formElement.find('.invalid-feedback').remove();
+                formElement.find('.form-control').removeClass('is-invalid');
+                formElement.find('.form-select').removeClass('is-invalid');
 
                 $.ajax({
                     type: 'POST',
@@ -121,7 +127,27 @@
                         $("#create-submenu-modal").modal('hide');
                         dt.ajax.reload(null, false);
                     },
-                    error: function(data) {
+                    error: function(xhr) {
+                        if (xhr.status === 422) {
+                            let errors = xhr.responseJSON.errors;
+                            $.each(errors, function(key, value) {
+                                // label error to the input field 
+                                var input = formElement.find('[name="' + key + '"]');
+                                input.addClass('is-invalid');
+
+                                // Display all rule that has been violated
+                                var errorElement = $(
+                                    '<div class="invalid-feedback"></div>');
+                                $.each(value, function(index, message) {
+                                    errorElement.append('<div>' + message +
+                                        '</div>');
+                                });
+                                input.after(errorElement);
+                            });
+                        } else {
+                            swal("Error", "An unexpected error occurred.", "error");
+                        }
+
                         showToast({
                             content: 'create menu failed',
                             type: 'error'
@@ -171,6 +197,13 @@
                 var formData = new FormData(this);
                 var id = triggerButton.data('id');
                 var url = "{{ route('submenu.update', ['submenu' => ':id']) }}".replace(':id', id);
+                var formElement = $(this);
+
+                // Clear previous errors
+                formElement.find('.invalid-feedback').remove();
+                formElement.find('.form-control').removeClass('is-invalid');
+                formElement.find('.form-select').removeClass('is-invalid');
+
                 $.ajax({
                     type: 'POST',
                     url: url,
@@ -179,13 +212,30 @@
                     contentType: false,
                     processData: false,
                     success: (data) => {
-                        console.log("successs");
-
                         showToast(data);
                         $("#edit-submenu-modal").modal('hide');
+                        dt.ajax.reload(null, false);
                     },
-                    error: function(data) {
-                        console.log("error");
+                    error: function(xhr) {
+                        if (xhr.status === 422) {
+                            let errors = xhr.responseJSON.errors;
+                            $.each(errors, function(key, value) {
+                                // label error to the input field 
+                                var input = formElement.find('[name="' + key + '"]');
+                                input.addClass('is-invalid');
+
+                                // Display all rule that has been violated
+                                var errorElement = $(
+                                    '<div class="invalid-feedback"></div>');
+                                $.each(value, function(index, message) {
+                                    errorElement.append('<div>' + message +
+                                        '</div>');
+                                });
+                                input.after(errorElement);
+                            });
+                        } else {
+                            swal("Error", "An unexpected error occurred.", "error");
+                        }
                         showToast({
                             content: 'create menu failed',
                             type: 'error'

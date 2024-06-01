@@ -18,16 +18,6 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($submenus as $submenu)
-                <tr>
-                    <td>{{ $loop->index + 1 }}</td>
-                    <td>{{ $submenu->name }}</td>
-                    <td>{{ $submenu->menu->name }}</td>
-                    <td>{{ $submenu->url }}</td>
-                    <td>{{ $submenu->order }}</td>
-                    <td>{{ '-' }}</td>
-                </tr>
-            @endforeach
         </tbody>
     </table>
 @endsection
@@ -40,7 +30,7 @@
             // Datatable definition
             dt = $('.datatable').DataTable({
                 ajax: {
-                    url: '{!! route('submenu.index', ['submenu' => ':id']) !!}'.replace(':id', {{ $submenu->id }}),
+                    url: '{!! route('submenu.index') !!}',
                     dataSrc: ''
                 },
                 columns: [{
@@ -115,7 +105,6 @@
                         $('#edit-submenu-form [name="order"]').val(response.order);
                     },
                     error: function(response) {
-                        console.log("error");
                         showToast({
                             content: 'server error menu failed',
                             type: 'error'
@@ -132,6 +121,13 @@
                 var formData = new FormData(this);
                 var id = triggerButton.data('id');
                 var url = "{{ route('submenu.update', ['submenu' => ':id']) }}".replace(':id', id);
+                var formElement = $(this);
+
+                // Clear previous errors
+                formElement.find('.invalid-feedback').remove();
+                formElement.find('.form-control').removeClass('is-invalid');
+                formElement.find('.form-select').removeClass('is-invalid');
+
                 $.ajax({
                     type: 'POST',
                     url: url,
@@ -144,8 +140,27 @@
                         $("#edit-submenu-modal").modal('hide');
                         dt.ajax.reload(null, false);
                     },
-                    error: function(data) {
-                        console.log("error");
+                    error: function(xhr) {
+                        if (xhr.status === 422) {
+                            let errors = xhr.responseJSON.errors;
+                            $.each(errors, function(key, value) {
+                                // label error to the input field 
+                                var input = formElement.find('[name="' + key + '"]');
+                                input.addClass('is-invalid');
+
+                                // Display all rule that has been violated
+                                var errorElement = $(
+                                    '<div class="invalid-feedback"></div>');
+                                $.each(value, function(index, message) {
+                                    errorElement.append('<div>' + message +
+                                        '</div>');
+                                });
+                                input.after(errorElement);
+                            });
+                        } else {
+                            swal("Error", "An unexpected error occurred.", "error");
+                        }
+
                         showToast({
                             content: 'create menu failed',
                             type: 'error'
@@ -201,9 +216,16 @@
             </div>
             <form id="edit-submenu-form" method="POST">
                 @csrf
+                @method('PUT')
                 <div class="modal-body">
-                    <input hidden type="text" name="menu_id" required value="{{ $submenu->menu->id }}">
-                    <input hidden name="_method" required value="PUT">
+                    <div class="mb-3">
+                        <label for="menu_id">Menu Name:</label>
+                        <select name="menu_id" id="menu_id" class="form-select">
+                            @foreach ($menus as $menu)
+                                <option value="{{ $menu->id }}">{{ $menu->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
                     <div class="mb-3">
                         <label for="name">Submenu Name:</label>

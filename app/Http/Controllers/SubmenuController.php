@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu;
 use App\Models\Submenu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\Rule;
 
 class SubmenuController extends Controller
 {
@@ -23,12 +25,13 @@ class SubmenuController extends Controller
     public function index()
     {
         $submenus = Submenu::with('menu')->get();
+        $menus = Menu::all();
 
         if (request()->ajax()) {
             return $submenus;
         }
 
-        return view('page.menu.submenu.index', compact('submenus'));
+        return view('page.menu.submenu.index', compact('submenus', 'menus'));
     }
 
     /**
@@ -39,7 +42,9 @@ class SubmenuController extends Controller
         $validated = $request->validate([
             'menu_id' => ['required', 'exists:menus,id'],
             'name' => ['required', 'unique:submenus'],
-            'order' => ['required', 'numeric'],
+            'order' => ['required', 'numeric', Rule::unique('submenus')->where(function ($query) use ($request) {
+                return $query->where('menu_id', $request->menu_id);
+            })],
             'url' => ['required'],
         ]);
         Submenu::create($validated);
@@ -66,8 +71,16 @@ class SubmenuController extends Controller
     {
         $validated = $request->validate([
             'menu_id' => ['required', 'exists:menus,id'],
-            'name' => ['required', 'unique:submenus'],
-            'order' => ['required', 'numeric'],
+            'name' => [
+                'required',
+                Rule::unique('submenus', 'name')->ignore($id)
+            ],
+            'order' => [
+                'required', 'numeric',
+                Rule::unique('submenus', 'order')->where(function ($query) use ($request) {
+                    return $query->where('menu_id', $request->menu_id);
+                })->ignore($id)
+            ],
             'url' => ['required'],
         ]);
         Submenu::where('id', $id)->update($validated);
