@@ -16,17 +16,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'name' => 'farid',
-            'email' => 'farid@gmail.com',
-            'password' => Hash::make('12345')
-        ]);
+        // User::create([
+        //     'name' => 'farid',
+        //     'email' => 'farid@gmail.com',
+        //     'password' => Hash::make('12345')
+        // ]);
+
         // $this->call([
-        //     BookSeeder::class,
-        //     DiskSeeder::class,
-        //     MemberSeeder::class,
-        //     MenuSeeder::class,
-        //     SubmenuSeeder::class,
+        // BookSeeder::class,
+        // DiskSeeder::class,
+        // MemberSeeder::class,
+        // MenuSeeder::class,
+        // SubmenuSeeder::class,
+        // RolePermissionSeeder::class,
         // ]);
     }
 }
