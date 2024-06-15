@@ -15,11 +15,14 @@ class RolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $role = Role::create(['name' => 'writer']);
-        $permission = Permission::create(['name' => 'edit articles']);
+        Permission::create(['name' => 'view book']);
+        Permission::create(['name' => 'viewAny book']);
+        Permission::create(['name' => 'create book']);
+        Permission::create(['name' => 'update book']);
+        Permission::create(['name' => 'delete book']);
+        // $role = Role::create(['name' => 'librarian']);
+        // $permission = Permission::create(['name' => 'edit articles']);
 
-        $role->givePermissionTo($permission);
-        // $user = User::find(1);
-        // $user->assignRole('writer');
+        // $role->givePermissionTo($permission);
     }
 }
