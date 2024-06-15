@@ -60,7 +60,7 @@ class SubmenuController extends Controller
      */
     public function edit(string $id)
     {
-        $submenu = Submenu::find($id);
+        $submenu = Submenu::with(['menu'])->find($id);
         return Response()->json($submenu);
     }
 

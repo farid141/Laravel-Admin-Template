@@ -157,6 +157,9 @@
                     type: "GET",
                     url: url,
                     success: function(response) {
+                        $(`#edit-submenu-form [id="edit-menu_id"] option[value="${response.menu.id}"]`)
+                            .prop('selected',
+                                true);
                         $('#edit-submenu-form [id="edit-name"]').val(response.name);
                         $('#edit-submenu-form [id="edit-url"]').val(response.url);
                         $('#edit-submenu-form [id="edit-order"]').val(response.order);

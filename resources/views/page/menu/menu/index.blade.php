@@ -60,9 +60,6 @@
                     {
                         data: 'id',
                         render: (data, type, row, meta) => {
-                            const btn_info =
-                                `<a href="{{ route('menu.show', ['menu' => ':id']) }}" class="btn icon btn-primary"><i
-                                        class="bi bi-info-circle"></i></a>`.replace(':id', row.id);
                             const btn_edit =
                                 `<button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                     data-bs-target="#edit-menu-modal" data-id=":id">
@@ -76,7 +73,7 @@
                                         <i class="bi bi-x"></i>
                                     </button>
                                 </form>`.replace(':id', row.id);
-                            return `${btn_info} ${btn_edit} ${btn_delete}`;
+                            return `${btn_edit} ${btn_delete}`;
                         },
                     },
                 ]
