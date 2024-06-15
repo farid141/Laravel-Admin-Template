@@ -6,6 +6,7 @@ use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\Rule;
 
 class MenuController extends Controller
 {
@@ -26,17 +27,10 @@ class MenuController extends Controller
         if (request()->ajax()) {
             return $menus;
         }
-        return view('page.menu.menu.index', compact('menus'));
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
         $iconPath = public_path('assets/extensions/bootstrap-icons/icons');
         $icons = File::allFiles($iconPath);
-        return view('page.menu.menu.create', compact('icons'));
+        return view('page.menu.menu.index', compact('menus', 'icons'));
     }
 
     /**
@@ -51,12 +45,10 @@ class MenuController extends Controller
         ]);
         Menu::create($validated);
 
-        session()->flash('message', [
+        return Response()->json([
             'content' => 'menu created!',
             'type' => 'success' // or 'error'
         ]);
-
-        return redirect('menu');
     }
 
     public function show(string $id)
@@ -74,11 +66,8 @@ class MenuController extends Controller
      */
     public function edit(string $id)
     {
-        $iconPath = public_path('assets/extensions/bootstrap-icons/icons');
-        $icons = File::allFiles($iconPath);
-
         $menu = Menu::find($id);
-        return view('page.menu.menu.edit', compact('menu', 'icons'));
+        return Response()->json($menu);
     }
 
     /**
@@ -87,17 +76,19 @@ class MenuController extends Controller
     public function update(Request $request, string $id)
     {
         $validated = $request->validate([
-            'name' => ['required', 'unique:menus'],
+            'name' => [
+                'required',
+                Rule::unique('submenus', 'name')->ignore($id)
+            ],
             'order' => ['required', 'numeric'],
+            'icon' => ['required'],
         ]);
         Menu::where('id', $id)->update($validated);
 
-        session()->flash('message', [
+        return Response()->json([
             'content' => 'menu updated!',
             'type' => 'success' // or 'error'
         ]);
-
-        return redirect('menu');
     }
 
     /**
@@ -109,7 +100,7 @@ class MenuController extends Controller
         $menu->delete();
 
         return Response()->json([
-            'content' => 'submenu ' . $menu['name'] . ' deleted!',
+            'content' => 'menu ' . $menu['name'] . ' deleted!',
             'type' => 'success' // or 'error'
         ]);
     }
