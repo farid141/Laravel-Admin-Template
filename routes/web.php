@@ -9,6 +9,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SubmenuController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
@@ -22,6 +23,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/submenu', SubmenuController::class)->except(['show', 'create']);
     Route::resource('/books', BookController::class);
     Route::resource('/disks', DiskController::class);
+    Route::resource('/user', UserController::class)->except(['show', 'create']);
     Route::resource('/members', MemberController::class);
     Route::resource('/role', RoleController::class)->except(['show', 'create']);
     Route::resource('/permission', PermissionController::class)->except(['show', 'create']);
