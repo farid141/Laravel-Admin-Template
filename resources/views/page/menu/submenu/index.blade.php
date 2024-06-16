@@ -88,11 +88,7 @@
                 e.preventDefault();
                 var formData = new FormData(this);
                 var formElement = $(this);
-
-                // Clear previous error message
-                formElement.find('.invalid-feedback').remove();
-                formElement.find('.form-control').removeClass('is-invalid');
-                formElement.find('.form-select').removeClass('is-invalid');
+                removeInvalidMessage(formElement);
 
                 $.ajax({
                     type: 'POST',
@@ -109,23 +105,7 @@
                         // error laravel validation
                         if (xhr.status === 422) {
                             let errors = xhr.responseJSON.errors;
-                            // the response will be key value of name and message
-                            $.each(errors, function(key, value) {
-                                // add is-invalid class to the corresponsing element 
-                                var inputElement = formElement.find('[id="create-' +
-                                    key +
-                                    '"]');
-                                inputElement.addClass('is-invalid');
-
-                                // Add element contains error message after inputElement
-                                var errorElement = $(
-                                    '<div class="invalid-feedback"></div>');
-                                $.each(value, function(index, message) {
-                                    errorElement.append('<div>' + message +
-                                        '</div>');
-                                });
-                                inputElement.after(errorElement);
-                            });
+                            displayValidationErrors(errors, formElement, 'create');
                         } else {
                             swal("Error", "An unexpected error occurred.", "error");
                         }
@@ -183,10 +163,7 @@
                 var url = "{{ route('submenu.update', ['submenu' => ':id']) }}".replace(':id', id);
                 var formElement = $(this);
 
-                // Clear previous error message
-                formElement.find('.invalid-feedback').remove();
-                formElement.find('.form-control').removeClass('is-invalid');
-                formElement.find('.form-select').removeClass('is-invalid');
+                removeInvalidMessage(formElement);
 
                 $.ajax({
                     type: 'POST',
@@ -204,26 +181,13 @@
                         // error laravel validation
                         if (xhr.status === 422) {
                             let errors = xhr.responseJSON.errors;
-                            $.each(errors, function(key, value) {
-                                // add is-invalid class to the corresponsing element 
-                                var input = formElement.find('[id="edit' + key + '"]');
-                                input.addClass('is-invalid');
-
-                                // Add element contains error message after inputElement
-                                var errorElement = $(
-                                    '<div class="invalid-feedback"></div>');
-                                $.each(value, function(index, message) {
-                                    errorElement.append('<div>' + message +
-                                        '</div>');
-                                });
-                                input.after(errorElement);
-                            });
+                            displayValidationErrors(errors, formElement, 'edit');
                         } else {
                             swal("Error", "An unexpected error occurred.", "error");
                         }
 
                         showToast({
-                            content: 'create submenu failed',
+                            content: 'edit submenu failed',
                             type: 'error'
                         });
                     }
@@ -264,100 +228,31 @@
                 });
             });
         });
+
+        function displayValidationErrors(errors, formElement, formName) {
+            $.each(errors, function(key, value) {
+                // add is-invalid class to the corresponsing element 
+                var input = formElement.find(`[id="${formName}-${key}"]`);
+                input.addClass('is-invalid');
+
+                // Add element contains error message after inputElement
+                var errorElement = $(
+                    '<div class="invalid-feedback"></div>');
+                $.each(value, function(index, message) {
+                    errorElement.append(`<div>${message}</div>`);
+                });
+                input.after(errorElement);
+            });
+        }
+
+        function removeInvalidMessage(formElement) {
+            // Clear previous error message
+            formElement.find('.invalid-feedback').remove();
+            formElement.find('.form-control').removeClass('is-invalid');
+            formElement.find('.form-select').removeClass('is-invalid');
+        }
     </script>
 @endpush
 
-<!-- Modal Edit -->
-<div class="modal fade" id="edit-submenu-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Submenu</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="edit-submenu-form" method="POST">
-                @csrf
-                @method('PUT')
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="edit-menu_id">Menu Name:</label>
-                        <select name="menu_id" id="edit-menu_id" class="form-select">
-                            @foreach ($menus as $menu)
-                                <option value="{{ $menu->id }}">{{ $menu->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="edit-name">Submenu Name:</label>
-                        <input type="text" placeholder="Menu Name" class="form-control" name="name" id="edit-name"
-                            required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="edit-url">URL:</label>
-                        <input type="text" placeholder="URL" class="form-control" name="url" id="edit-url"
-                            required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="edit-order">Order:</label>
-                        <input type="text" placeholder="Order" class="form-control" name="order" id="edit-order"
-                            required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal create -->
-<div class="modal fade" id="create-submenu-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Create Submenu</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="create-submenu-form" method="POST">
-                @csrf
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="create-menu_id">Menu Name:</label>
-                        <select name="menu_id" id="create-menu_id" class="form-select">
-                            @foreach ($menus as $menu)
-                                <option value="{{ $menu->id }}">{{ $menu->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="create-name">Submenu Name:</label>
-                        <input type="text" placeholder="Menu Name" class="form-control" name="name"
-                            id="create-name" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="create-url">URL:</label>
-                        <input type="text" placeholder="URL" class="form-control" name="url" id="create-url"
-                            required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="create-order">Order:</label>
-                        <input type="text" placeholder="Order" class="form-control" name="order" id="create-order"
-                            required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+@include('page.menu.submenu.partials.create-form')
+@include('page.menu.submenu.partials.edit-form')
