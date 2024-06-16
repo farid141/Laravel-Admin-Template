@@ -117,10 +117,7 @@
                 var formData = new FormData(this);
                 var formElement = $(this);
 
-                // Clear previous error message
-                formElement.find('.invalid-feedback').remove();
-                formElement.find('.form-control').removeClass('is-invalid');
-                formElement.find('.form-select').removeClass('is-invalid');
+                removeInvalidMessage(formElement);
 
                 $.ajax({
                     type: 'POST',
@@ -137,23 +134,7 @@
                         // error laravel validation
                         if (xhr.status === 422) {
                             let errors = xhr.responseJSON.errors;
-                            // the response will be key value of name and message
-                            $.each(errors, function(key, value) {
-                                // add is-invalid class to the corresponsing element 
-                                var inputElement = formElement.find('[id="create-' +
-                                    key +
-                                    '"]');
-                                inputElement.addClass('is-invalid');
-
-                                // Add element contains error message after inputElement
-                                var errorElement = $(
-                                    '<div class="invalid-feedback"></div>');
-                                $.each(value, function(index, message) {
-                                    errorElement.append('<div>' + message +
-                                        '</div>');
-                                });
-                                inputElement.after(errorElement);
-                            });
+                            displayErrorMessage(errors, formElement, 'create');
                         } else {
                             swal("Error", "An unexpected error occurred.", "error");
                         }
@@ -209,10 +190,7 @@
                 var url = "{{ route('menu.update', ['menu' => ':id']) }}".replace(':id', id);
                 var formElement = $(this);
 
-                // Clear previous error message
-                formElement.find('.invalid-feedback').remove();
-                formElement.find('.form-control').removeClass('is-invalid');
-                formElement.find('.form-select').removeClass('is-invalid');
+                removeInvalidMessage(formElement);
 
                 $.ajax({
                     type: 'POST',
@@ -230,20 +208,7 @@
                         // error laravel validation
                         if (xhr.status === 422) {
                             let errors = xhr.responseJSON.errors;
-                            $.each(errors, function(key, value) {
-                                // add is-invalid class to the corresponsing element 
-                                var input = formElement.find('[id="edit' + key + '"]');
-                                input.addClass('is-invalid');
-
-                                // Add element contains error message after inputElement
-                                var errorElement = $(
-                                    '<div class="invalid-feedback"></div>');
-                                $.each(value, function(index, message) {
-                                    errorElement.append('<div>' + message +
-                                        '</div>');
-                                });
-                                input.after(errorElement);
-                            });
+                            displayErrorMessage(errors, formElement, 'edit');
                         } else {
                             swal("Error", "An unexpected error occurred.", "error");
                         }
@@ -290,88 +255,31 @@
                 });
             });
         });
+
+        function displayErrorMessage(errors, formElement, formName) {
+            $.each(errors, function(key, value) {
+                // add is-invalid class to the corresponsing element 
+                var input = formElement.find(`[id="${formName}-${key}"]`);
+                input.addClass('is-invalid');
+
+                // Add element contains error message after inputElement
+                var errorElement = $(
+                    '<div class="invalid-feedback"></div>');
+                $.each(value, function(index, message) {
+                    errorElement.append(`<div>${message}</div>`);
+                });
+                input.after(errorElement);
+            });
+        }
+
+        function removeInvalidMessage(formElement) {
+            // Clear previous error message
+            formElement.find('.invalid-feedback').remove();
+            formElement.find('.form-control').removeClass('is-invalid');
+            formElement.find('.form-select').removeClass('is-invalid');
+        }
     </script>
 @endpush
 
-<!-- Modal create -->
-<div class="modal fade" id="create-menu-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Create Menu</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="create-menu-form" method="POST">
-                @csrf
-                <div class="modal-body">
-
-                    <div class="mb-3">
-                        <label for="create-name">Menu Name:</label>
-                        <input type="text" placeholder="Menu Name" class="form-control" name="name"
-                            id="create-name" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="create-order">Order:</label>
-                        <input type="text" placeholder="Order" class="form-control" name="order" id="create-order"
-                            required>
-                    </div>
-
-                    <label>Icon</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text h-100" id="selected-create-icon"></span>
-                        </div>
-                        <input type="text" class="form-control iconpicker" id="create-icon" name="icon">
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Edit -->
-<div class="modal fade" id="edit-menu-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit menu</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="edit-menu-form" method="POST">
-                @csrf
-                @method('PUT')
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="edit-name">menu Name:</label>
-                        <input type="text" placeholder="Menu Name" class="form-control" name="name" id="edit-name"
-                            required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="edit-order">Order:</label>
-                        <input type="text" placeholder="Order" class="form-control" name="order" id="edit-order"
-                            required>
-                    </div>
-
-                    <label>Icon</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text h-100 " id="selected-edit-icon"></span>
-                        </div>
-                        <input type="text" class="form-control iconpicker" id="edit-icon" name="icon">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+@include('page.menu.menu.partials.create-form')
+@include('page.menu.menu.partials.edit-form')
