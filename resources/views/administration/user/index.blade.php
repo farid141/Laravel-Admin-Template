@@ -86,10 +86,7 @@
                 var formData = new FormData(this);
                 var formElement = $(this);
 
-                // Clear previous error message
-                formElement.find('.invalid-feedback').remove();
-                formElement.find('.form-control').removeClass('is-invalid');
-                formElement.find('.form-select').removeClass('is-invalid');
+                removeInvalidMessage(formElement);
 
                 $.ajax({
                     type: 'POST',
@@ -106,23 +103,7 @@
                         // error laravel validation
                         if (xhr.status == 422) {
                             let errors = xhr.responseJSON.errors;
-                            // the response will be key value of name and message
-                            $.each(errors, function(key, value) {
-                                // add is-invalid class to the corresponsing element 
-                                var inputElement = formElement.find('[id="create-' +
-                                    key +
-                                    '"]');
-                                inputElement.addClass('is-invalid');
-
-                                // Add element contains error message after inputElement
-                                var errorElement = $(
-                                    '<div class="invalid-feedback"></div>');
-                                $.each(value, function(index, message) {
-                                    errorElement.append('<div>' + message +
-                                        '</div>');
-                                });
-                                inputElement.after(errorElement);
-                            });
+                            displayValidationErrors(errors, formElement, 'create');
                         } else {
                             swal("Error", "An unexpected error occurred.", "error");
                         }
@@ -181,10 +162,7 @@
                 var url = "{{ route('user.update', ['user' => ':id']) }}".replace(':id', id);
                 var formElement = $(this);
 
-                // Clear previous error message
-                formElement.find('.invalid-feedback').remove();
-                formElement.find('.form-control').removeClass('is-invalid');
-                formElement.find('.form-select').removeClass('is-invalid');
+                removeInvalidMessage(formElement);
 
                 $.ajax({
                     type: 'POST',
@@ -202,33 +180,18 @@
                         // error laravel validation
                         if (xhr.status === 422) {
                             let errors = xhr.responseJSON.errors;
-                            $.each(errors, function(key, value) {
-                                // add is-invalid class to the corresponsing element 
-                                var inputElement = formElement.find('[name="' + key +
-                                    '"]');
-                                inputElement.addClass('is-invalid');
-
-                                // Add element contains error message after inputElement
-                                var errorElement = $(
-                                    '<div class="invalid-feedback"></div>');
-                                $.each(value, function(index, message) {
-                                    errorElement.append('<div>' + message +
-                                        '</div>');
-                                });
-                                inputElement.after(errorElement);
-                            });
+                            displayValidationErrors(errors, formElement, 'edit');
                         } else {
                             swal("Error", "An unexpected error occurred.", "error");
                         }
 
                         showToast({
-                            content: 'create user failed',
+                            content: 'edit user failed',
                             type: 'error'
                         });
                     }
                 });
             });
-
 
             // ***************************
             // DELETE user SUBMITTED
@@ -264,97 +227,31 @@
                 });
             });
         });
+
+        function displayValidationErrors(errors, formElement, formName) {
+            // the response will be key value of name and message
+            $.each(errors, function(key, value) {
+                // add is-invalid class to the corresponsing element 
+                var inputElement = formElement.find(`[id="${formName}-${key}"]`);
+                inputElement.addClass('is-invalid');
+
+                // Add element contains error message after inputElement
+                var errorElement = $('<div class="invalid-feedback"></div>');
+                $.each(value, function(index, message) {
+                    errorElement.append(`<div>${message}</div>`);
+                });
+                inputElement.after(errorElement);
+            });
+        }
+
+        function removeInvalidMessage(formElement) {
+            // Clear previous error message
+            formElement.find('.invalid-feedback').remove();
+            formElement.find('.form-control').removeClass('is-invalid');
+            formElement.find('.form-select').removeClass('is-invalid');
+        }
     </script>
 @endpush
 
-
-<!-- Modal Create -->
-<div class="modal fade" id="create-user-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Create user</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="create-user-form" method="POST">
-                @csrf
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="create-name">User Name:</label>
-                        <input id="create-name" type="text" placeholder="User Name" class="form-control"
-                            name="name" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="create-role">Role:</label>
-                        <select name="role" id="create-role" class="form-select">
-                            @foreach ($roles as $role)
-                                <option value="{{ $role->name }}">{{ $role->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="create-email">Email:</label>
-                        <input id="create-email" type="email" placeholder="Email" class="form-control" name="email"
-                            required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="create-password">Password:</label>
-                        <input id="create-password" type="password" placeholder="Password" class="form-control"
-                            name="password" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="create-password_confirmation">Confirm Password:</label>
-                        <input id="create-password_confirmation" type="password" placeholder="Confirm Password"
-                            class="form-control" name="password_confirmation" required>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal edit -->
-<div class="modal fade" id="edit-user-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">edit user</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="edit-user-form" method="POST">
-                @csrf
-                @method('PUT')
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="edit-name">User Name:</label>
-                        <input id="edit-name" type="text" placeholder="User Name" class="form-control" name="name"
-                            required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-role">Role:</label>
-                        <select name="role" id="edit-role" class="form-select">
-                            @foreach ($roles as $role)
-                                <option value="{{ $role->name }}">{{ $role->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-email">Email:</label>
-                        <input id="edit-email" type="email" placeholder="Email" class="form-control" name="email"
-                            required>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+@include('administration.user.partials.create-form')
+@include('administration.user.partials.edit-form')
