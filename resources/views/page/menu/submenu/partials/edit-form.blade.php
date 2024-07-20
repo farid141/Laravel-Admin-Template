@@ -21,8 +21,8 @@
 
                     <div class="mb-3">
                         <label for="edit-name">Submenu Name:</label>
-                        <input type="text" placeholder="Menu Name" class="form-control" name="name" id="edit-name"
-                            required>
+                        <input type="text" placeholder="Submenu Name" class="form-control" name="name"
+                            id="edit-name" required>
                     </div>
 
                     <div class="mb-3">
@@ -45,3 +45,48 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+    <script>
+        // ***************************
+        // FORM EDIT SUBMENU SUBMITTED
+        // ***************************
+        $('#edit-submenu-form').submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            var id = $(this).data('id');
+            var url = "{{ route('submenu.update', ['submenu' => ':id']) }}".replace(':id', id);
+            var formElement = $(this);
+
+            removeInvalidMessage(formElement);
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: (data) => {
+                    showToast(data);
+                    $("#edit-submenu-modal").modal('hide');
+                    dt.ajax.reload(null, false); // reload datatable
+                },
+                error: function(xhr) {
+                    // error laravel validation
+                    if (xhr.status === 422) {
+                        let errors = xhr.responseJSON.errors;
+                        displayValidationErrors(errors, formElement, 'edit');
+                    } else {
+                        swal("Error", "An unexpected error occurred.", "error");
+                    }
+
+                    showToast({
+                        content: 'edit submenu failed',
+                        type: 'error'
+                    });
+                }
+            });
+        });
+    </script>
+@endpush

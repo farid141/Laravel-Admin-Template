@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Menu;
 use App\Models\Submenu;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Permission;
 
 class SubmenuController extends Controller
 {
@@ -30,8 +30,9 @@ class SubmenuController extends Controller
         if (request()->ajax()) {
             return $submenus;
         }
+        $permissions = ['view', 'viewAny', 'create', 'update', 'delete'];
 
-        return view('page.menu.submenu.index', compact('submenus', 'menus'));
+        return view('page.menu.submenu.index', compact('submenus', 'menus', 'permissions'));
     }
 
     /**
@@ -48,6 +49,18 @@ class SubmenuController extends Controller
             'url' => ['required'],
         ]);
         Submenu::create($validated);
+
+        if ($request['create-permission']) {
+            $permission_name = $request['permission-name'];
+            if ($request['permissions'] && $permission_name) {
+                $permission_in_database = Permission::all('name')->pluck('name')->toArray();
+                foreach ($request['permissions'] as $permission) {
+                    // if permission isnt exist, create it
+                    if (!in_array("$permission~$permission_name", $permission_in_database))
+                        Permission::create(['name' => "$permission~$permission_name"]);
+                }
+            }
+        }
 
         return Response()->json([
             'content' => 'submenu ' . $validated['name'] . ' added!',
