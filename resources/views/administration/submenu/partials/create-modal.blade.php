@@ -88,7 +88,7 @@
             e.preventDefault();
             var formData = new FormData(this);
             var formElement = $(this);
-            removeInvalidMessage(formElement);
+            removeErrorMessages(formElement);
 
             $.ajax({
                 type: 'POST',
@@ -105,13 +105,13 @@
                     // error laravel validation
                     if (xhr.status === 422) {
                         let errors = xhr.responseJSON.errors;
-                        displayValidationErrors(errors, formElement, 'create');
+                        displayErrorMessages(errors, formElement, 'create');
                     } else {
                         swal("Error", "An unexpected error occurred.", "error");
                     }
 
                     showToast({
-                        content: 'create submenu failed',
+                        content: 'Create submenu failed',
                         type: 'error'
                     });
                 }

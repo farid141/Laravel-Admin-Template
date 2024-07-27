@@ -121,6 +121,29 @@
         $(document).ajaxStart(function() {
             loadingModal('show');
         });
+
+        function displayErrorMessages(errors, formElement, formName) {
+            $.each(errors, function(key, value) {
+                // add is-invalid class to the corresponsing element 
+                var input = formElement.find(`[id="${formName}-${key}"]`);
+                input.addClass('is-invalid');
+
+                // Add element contains error message after inputElement
+                var errorElement = $(
+                    '<div class="invalid-feedback"></div>');
+                $.each(value, function(index, message) {
+                    errorElement.append(`<div>${message}</div>`);
+                });
+                input.after(errorElement);
+            });
+        }
+
+        function removeErrorMessages(formElement) {
+            // Clear previous error message
+            formElement.find('.invalid-feedback').remove();
+            formElement.find('.form-control').removeClass('is-invalid');
+            formElement.find('.form-select').removeClass('is-invalid');
+        }
     </script>
 
     {{-- toastify --}}

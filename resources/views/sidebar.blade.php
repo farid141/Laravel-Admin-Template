@@ -52,6 +52,7 @@
         </div>
         <div class="sidebar-menu">
             <ul class="menu">
+                {{-- MENU --}}
                 <li class="sidebar-title">Menu</li>
 
                 <li class="sidebar-item  @if ($menu_session == 'dashboard') active @endif">
@@ -78,6 +79,7 @@
                     </li>
                 @endforeach
 
+                {{-- Administration --}}
                 <li class="sidebar-title">Administration</li>
 
                 <li class="sidebar-item has-sub @if ($menu_session == 'menu') active @endif">

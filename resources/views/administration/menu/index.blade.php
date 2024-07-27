@@ -1,7 +1,7 @@
 @extends('layout')
 @section('content')
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-user-modal">
-        Add User
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-menu-modal">
+        Add Menu
     </button>
 
     <table class="table table-bordered datatable">
@@ -9,8 +9,8 @@
             <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>Email</th>
-                <th>Roles</th>
+                <th>Icon</th>
+                <th>Order</th>
                 <th>Created at</th>
                 <th>Updated at</th>
                 <th>Actions</th>
@@ -24,10 +24,13 @@
 @push('scripts')
     <script>
         var dt = null;
+        var editIconpicker = null;
+        var createIconpicker = null;
+
         // Datatable definition
         dt = $('.datatable').DataTable({
             ajax: {
-                url: '{!! route('user.index') !!}',
+                url: '{!! route('menu.index') !!}',
                 dataSrc: ''
             },
             columns: [{
@@ -42,10 +45,10 @@
                     data: 'name'
                 },
                 {
-                    data: 'email'
+                    data: 'icon'
                 },
                 {
-                    data: 'roles[0].name'
+                    data: 'order'
                 },
                 {
                     data: 'created_at'
@@ -58,11 +61,11 @@
                     render: (data, type, row, meta) => {
                         const btn_edit =
                             `<button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                    data-bs-target="#edit-user-modal" data-id=":id">
+                                    data-bs-target="#edit-menu-modal" data-id=":id">
                                     <i class="bi bi-pencil"></i>
                                 </button>`.replace(':id', row.id);
                         const btn_delete =
-                            `<form action="" class="d-inline delete-user-form" data-id=":id">
+                            `<form action="" class="d-inline" id="delete-menu-form" data-id=":id">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn icon btn-danger">
@@ -75,22 +78,51 @@
             ]
         });
 
-        // MODAL EDIT USER SHOWN
-        $('#edit-user-modal').on('shown.bs.modal', (e) => {
+        // iconpicker
+        fetch('/assets/vendors/iconpicker/bootstrap5.json')
+            .then(response => response.json())
+            .then(result => {
+                // Initialize Iconpicker with the fetched icons
+                editIconpicker = new Iconpicker(document.querySelector("#edit-icon"), {
+                    icons: result,
+                    showSelectedIn: document.querySelector('#selected-edit-icon'),
+                    searchable: true,
+                    selectedClass: "selected",
+                    containerClass: "my-picker",
+                    hideOnSelect: true,
+                    fade: true,
+                    valueFormat: val => `${val}`
+                });
+
+                // Initialize Iconpicker with the fetched icons
+                createIiconpicker = new Iconpicker(document.querySelector("#create-icon"), {
+                    icons: result,
+                    showSelectedIn: document.querySelector('#selected-create-icon'),
+                    searchable: true,
+                    selectedClass: "selected",
+                    containerClass: "my-picker",
+                    hideOnSelect: true,
+                    fade: true,
+                    valueFormat: val => `${val}`
+                });
+            })
+            .catch(error => console.error('Error fetching the JSON file:', error));
+
+
+        // MODAL EDIT MENU SHOWN
+        $('#edit-menu-modal').on('shown.bs.modal', (e) => {
             var id = $(e.relatedTarget).data('id');
-            var url = "{{ route('user.edit', ['user' => ':id']) }}".replace(':id', id);
-            $('#edit-user-form').attr('data-id', id); //set form's data-id
+            var url = "{{ route('menu.edit', ['menu' => ':id']) }}".replace(':id', id);
+            $('#edit-menu-form').attr('data-id', id); //set form's data-id
 
             $.ajax({
                 type: "GET",
                 url: url,
                 success: function(response) {
-                    $('#edit-user-form [id="edit-name"]').val(response.name);
-                    $('#edit-user-form [id="edit-email"]').val(response.email);
-                    $('#edit-user-form [id="edit-role"] option[value="' + response.roles[
-                            0].name +
-                        '"]').prop('selected',
-                        true);
+                    $('#edit-menu-form [id="edit-name"]').val(response.name);
+                    $('#edit-menu-form [id="edit-order"]').val(response.order);
+                    editIconpicker.set(response.icon);
+                    editIconpicker.el.dispatchEvent(new Event('change'));
                 },
                 error: function(response) {
                     showToast({
@@ -101,13 +133,13 @@
             });
         });
 
-        // DELETE USER SUBMITTED
+        // DELETE EDIT MENU SUBMITTED
         // HARUS EVENT DELEGATION
-        $(document).on('submit', '.delete-user-form', function(e) {
+        $(document).on('submit', '#delete-menu-form', function(e) {
             e.preventDefault();
             var id = $(this).attr('data-id');
             var formData = new FormData(this);
-            var url = "{{ route('user.destroy', ['user' => ':id']) }}".replace(':id', id);
+            var url = "{{ route('menu.destroy', ['menu' => ':id']) }}".replace(':id', id);
 
             confirmationModal().then((willDelete) => {
                 if (willDelete) {
@@ -124,7 +156,7 @@
                         },
                         error: function(data) {
                             showToast({
-                                content: 'delete user failed',
+                                content: 'delete menu failed',
                                 type: 'error'
                             });
                         }
@@ -135,5 +167,5 @@
     </script>
 @endpush
 
-@include('administration.user.partials.create-modal')
-@include('administration.user.partials.edit-modal')
+@include('administration.menu.partials.create-modal')
+@include('administration.menu.partials.edit-modal')

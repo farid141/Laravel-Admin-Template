@@ -42,7 +42,7 @@ class PermissionController extends Controller
         Permission::create(['name' => $validated['name']]);
 
         return Response()->json([
-            'content' => 'role ' . $validated['name'] . ' created!',
+            'content' => 'Permission ' . $validated['name'] . ' created!',
             'type' => 'success' // or 'error'
         ]);
     }
@@ -69,7 +69,7 @@ class PermissionController extends Controller
         $permission->update($validated);
 
         return Response()->json([
-            'content' => 'role ' . $permission['name'] . ' created!',
+            'content' => 'Permission ' . $permission['name'] . ' created!',
             'type' => 'success' // or 'error'
         ]);
     }
@@ -83,7 +83,7 @@ class PermissionController extends Controller
         $permission->delete();
 
         return Response()->json([
-            'content' => 'permission ' . $permission['name'] . ' deleted!',
+            'content' => 'Permission ' . $permission['name'] . ' deleted!',
             'type' => 'success' // or 'error'
         ]);
     }

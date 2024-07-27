@@ -31,8 +31,7 @@ class SubmenuController extends Controller
             return $submenus;
         }
         $permissions = ['view', 'viewAny', 'create', 'update', 'delete'];
-
-        return view('page.menu.submenu.index', compact('submenus', 'menus', 'permissions'));
+        return view('administration.submenu.index', compact('submenus', 'menus', 'permissions'));
     }
 
     /**

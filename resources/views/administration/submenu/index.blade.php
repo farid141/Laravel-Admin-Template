@@ -79,10 +79,7 @@
             ]
         });
 
-        // **********************************
-        // MODAL EDIT SUBMENU CLICKED
-        // **********************************
-        // Set all element value with ajax data
+        // MODAL EDIT SUBMENU SHOWN
         $('#edit-submenu-modal').on('shown.bs.modal', (e) => {
             var id = $(e.relatedTarget).data('id');
             $('#edit-submenu-form').attr('data-id', id); //set form's data-id
@@ -108,9 +105,7 @@
             });
         });
 
-        // ***************************
         // DELETE SUBMENU SUBMITTED
-        // ***************************
         // HARUS EVENT DELEGATION
         $(document).on('submit', '#delete-submenu-form', function(e) {
             e.preventDefault();
@@ -133,7 +128,7 @@
                         },
                         error: function(data) {
                             showToast({
-                                content: 'delete submenu failed',
+                                content: 'Delete submenu failed',
                                 type: 'error'
                             });
                         }
@@ -141,31 +136,8 @@
                 }
             });
         });
-
-        function displayValidationErrors(errors, formElement, formName) {
-            $.each(errors, function(key, value) {
-                // add is-invalid class to the corresponsing element 
-                var input = formElement.find(`[id="${formName}-${key}"]`);
-                input.addClass('is-invalid');
-
-                // Add element contains error message after inputElement
-                var errorElement = $(
-                    '<div class="invalid-feedback"></div>');
-                $.each(value, function(index, message) {
-                    errorElement.append(`<div>${message}</div>`);
-                });
-                input.after(errorElement);
-            });
-        }
-
-        function removeInvalidMessage(formElement) {
-            // Clear previous error message
-            formElement.find('.invalid-feedback').remove();
-            formElement.find('.form-control').removeClass('is-invalid');
-            formElement.find('.form-select').removeClass('is-invalid');
-        }
     </script>
 @endpush
 
-@include('page.menu.submenu.partials.create-form')
-@include('page.menu.submenu.partials.edit-form')
+@include('administration.submenu.partials.create-modal')
+@include('administration.submenu.partials.edit-modal')

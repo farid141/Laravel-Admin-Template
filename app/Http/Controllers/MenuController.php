@@ -30,7 +30,7 @@ class MenuController extends Controller
 
         $iconPath = public_path('assets/extensions/bootstrap-icons/icons');
         $icons = File::allFiles($iconPath);
-        return view('page.menu.menu.index', compact('menus', 'icons'));
+        return view('administration.menu.index', compact('menus', 'icons'));
     }
 
     /**
