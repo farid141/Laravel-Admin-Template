@@ -10,7 +10,7 @@
                 @method('PUT')
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="edit-name">menu Name:</label>
+                        <label for="edit-name">Menu Name:</label>
                         <input type="text" placeholder="Menu Name" class="form-control" name="name" id="edit-name"
                             required>
                     </div>
@@ -21,12 +21,10 @@
                             required>
                     </div>
 
-                    <label>Icon</label>
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text h-100 " id="selected-edit-icon"></span>
-                        </div>
-                        <input type="text" class="form-control iconpicker" id="edit-icon" name="icon">
+                        <span class="input-group-text">Icon</span>
+                        <input type="text" id="edit-icon" class="form-control iconpicker" placeholder="Icon"
+                            aria-label="Icone Picker" aria-describedby="edit-icon" name="icon">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -65,7 +63,7 @@
                     // error laravel validation
                     if (xhr.status === 422) {
                         let errors = xhr.responseJSON.errors;
-                        displayErrorMessage(errors, formElement, 'edit');
+                        displayErrorMessages(errors, formElement, 'edit');
                     } else {
                         swal("Error", "An unexpected error occurred.", "error");
                     }

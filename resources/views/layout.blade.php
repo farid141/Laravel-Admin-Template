@@ -30,6 +30,8 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-loadingModal@1.0.2/js/jquery.loadingModal.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+    <!-- Load the Latest Bootstrap Icons -->
+    <link href="/assets/vendors/JqueryIconpicker/css/bootstrapicons-iconpicker.css" rel="stylesheet" />
     @stack('styles')
 </head>
 
@@ -72,12 +74,16 @@
     <script src="/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 
     {{-- bootsrap 5 --}}
-    <script src="/assets/compiled/js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
+    </script>
 
-    {{-- another scripts --}}
+    <script src="/assets/vendors/JqueryIconpicker/js/bootstrapicon-iconpicker.js"></script>
+
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script src="/assets/vendors/iconpicker/iconpicker.js"></script>
-
     <script>
         function showToast(message) {
             Toastify({
@@ -142,6 +148,39 @@
             formElement.find('.form-control').removeClass('is-invalid');
             formElement.find('.form-select').removeClass('is-invalid');
         }
+
+        $('.iconpicker').iconpicker({
+            // customize the icon picker with the following options
+            // THANKS FOR WATCHING!
+            title: 'My Icon Picker',
+            selected: false,
+            defaultValue: true,
+            placement: "bottom",
+            collision: "none",
+            animation: false,
+            hideOnSelect: true,
+            showFooter: true,
+            searchInFooter: false,
+            mustAccept: false,
+            selectedCustomClass: "bg-primary",
+            fullClassFormatter: function(e) {
+                return e;
+            },
+            input: "input,.iconpicker-input",
+            inputSearch: false,
+            container: false,
+            component: ".input-group-addon,.iconpicker-component",
+            templates: {
+                popover: '<div class="iconpicker-popover popover" role="tooltip"><div class="arrow"></div>' +
+                    '<div class="popover-title"></div><div class="popover-content"></div></div>',
+                footer: '<div class="popover-footer"></div>',
+                buttons: '<button class="iconpicker-btn iconpicker-btn-cancel btn btn-default btn-sm">Cancel</button>' +
+                    ' <button class="iconpicker-btn iconpicker-btn-accept btn btn-primary btn-sm">Accept</button>',
+                search: '<input type="search" class="form-control iconpicker-search" placeholder="Type to filter" />',
+                iconpicker: '<div class="iconpicker"><div class="iconpicker-items"></div></div>',
+                iconpickerItem: '<a role="button" href="javascript:;" class="iconpicker-item"><i></i></a>'
+            }
+        });
     </script>
 
     {{-- toastify --}}

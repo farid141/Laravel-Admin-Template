@@ -8,7 +8,6 @@
             <form id="create-menu-form" method="POST">
                 @csrf
                 <div class="modal-body">
-
                     <div class="mb-3">
                         <label for="create-name">Menu Name:</label>
                         <input type="text" placeholder="Menu Name" class="form-control" name="name"
@@ -21,12 +20,10 @@
                             required>
                     </div>
 
-                    <label>Icon</label>
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text h-100" id="selected-create-icon"></span>
-                        </div>
-                        <input type="text" class="form-control iconpicker" id="create-icon" name="icon">
+                        <span class="input-group-text">Icon</span>
+                        <input type="text" id="create-icon" class="form-control iconpicker" placeholder="Icon"
+                            aria-label="Icone Picker" aria-describedby="create-icon" name="icon">
                     </div>
                 </div>
 

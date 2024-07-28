@@ -78,36 +78,12 @@
             ]
         });
 
-        // iconpicker
-        fetch('/assets/vendors/iconpicker/bootstrap5.json')
-            .then(response => response.json())
-            .then(result => {
-                // Initialize Iconpicker with the fetched icons
-                editIconpicker = new Iconpicker(document.querySelector("#edit-icon"), {
-                    icons: result,
-                    showSelectedIn: document.querySelector('#selected-edit-icon'),
-                    searchable: true,
-                    selectedClass: "selected",
-                    containerClass: "my-picker",
-                    hideOnSelect: true,
-                    fade: true,
-                    valueFormat: val => `${val}`
-                });
-
-                // Initialize Iconpicker with the fetched icons
-                createIiconpicker = new Iconpicker(document.querySelector("#create-icon"), {
-                    icons: result,
-                    showSelectedIn: document.querySelector('#selected-create-icon'),
-                    searchable: true,
-                    selectedClass: "selected",
-                    containerClass: "my-picker",
-                    hideOnSelect: true,
-                    fade: true,
-                    valueFormat: val => `${val}`
-                });
-            })
-            .catch(error => console.error('Error fetching the JSON file:', error));
-
+        // MODAL CREATE MENU SHOWN
+        $('#create-menu-modal').on('shown.bs.modal', (e) => {
+            if ($('html').attr('data-bs-theme') == 'dark') {
+                $('#create-icon').trigger('focus'); // due too UI error when dark mode
+            }
+        });
 
         // MODAL EDIT MENU SHOWN
         $('#edit-menu-modal').on('shown.bs.modal', (e) => {
@@ -115,14 +91,17 @@
             var url = "{{ route('menu.edit', ['menu' => ':id']) }}".replace(':id', id);
             $('#edit-menu-form').attr('data-id', id); //set form's data-id
 
+            if ($('html').attr('data-bs-theme') == 'dark') {
+                $('#edit-icon').trigger('focus'); // due too UI error when dark mode
+            }
+
             $.ajax({
                 type: "GET",
                 url: url,
                 success: function(response) {
                     $('#edit-menu-form [id="edit-name"]').val(response.name);
                     $('#edit-menu-form [id="edit-order"]').val(response.order);
-                    editIconpicker.set(response.icon);
-                    editIconpicker.el.dispatchEvent(new Event('change'));
+                    $('#edit-menu-form [id="edit-icon"]').val(response.icon);
                 },
                 error: function(response) {
                     showToast({
@@ -131,6 +110,14 @@
                     });
                 }
             });
+        });
+
+        $('#edit-icon').on('iconpickerShow', function() {
+            $('.iconpicker-search').val($('#edit-icon').val())
+        });
+
+        $('#create-icon').on('iconpickerShow', function() {
+            $('.iconpicker-search').val($('#create-icon').val())
         });
 
         // DELETE EDIT MENU SUBMITTED
