@@ -2,9 +2,7 @@
     use App\Models\Menu;
     use Illuminate\Support\Facades\Session;
 
-    $menu_session = Session::get('menu');
-    $submenu_session = Session::get('submenu');
-
+    $menu_session = explode('-', Session::get('menu'));
     $menus = Menu::with('submenus')->get();
 @endphp
 <div id="sidebar">
@@ -62,19 +60,26 @@
                 </li>
 
                 @foreach ($menus as $menu)
-                    <li class="sidebar-item has-sub @if ($menu_session == $menu->name) active @endif">
-                        <a href="#" class='sidebar-link'>
+                    <li
+                        class="sidebar-item 
+                        @if ($menu->has_child) has-sub @endif
+                        @if ($menu_session[0] == $menu->name) active @endif">
+                        <a href="@if (!$menu->has_child) {{ $menu->url }} @endif" class='sidebar-link'>
                             <i class="{{ $menu->icon }}"></i>
                             <span>{{ $menu->name }}</span>
                         </a>
 
-                        <ul class="submenu active">
-                            @foreach ($menu->submenus as $submenu)
-                                <li class="submenu-item @if ($submenu_session == $submenu->name) active @endif">
-                                    <a href="{{ $submenu->url }}" class="submenu-link">{{ $submenu->name }}</a>
-                                </li>
-                            @endforeach
-                        </ul>
+                        @if ($menu->has_child)
+                            <ul class="submenu active">
+                                @foreach ($menu->submenus as $submenu)
+                                    <li
+                                        class="submenu-item 
+                                        {{ isset($menu_session[1]) && $menu_session[1] == $submenu->name ? 'active' : '' }}">
+                                        <a href="{{ $submenu->url }}" class="submenu-link">{{ $submenu->name }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
                     </li>
                 @endforeach
 
@@ -88,10 +93,10 @@
                     </a>
 
                     <ul class="submenu active">
-                        <li class="submenu-item @if ($submenu_session == 'menu') active @endif">
+                        <li class="submenu-item @if ($menu_session[0] == 'menu') active @endif">
                             <a href="/menu" class="submenu-link">{{ 'menu' }}</a>
                         </li>
-                        <li class="submenu-item @if ($submenu_session == 'submenu') active @endif">
+                        <li class="submenu-item @if ($menu_session[0] == 'submenu') active @endif">
                             <a href="/submenu" class="submenu-link">{{ 'submenu' }}</a>
                         </li>
                     </ul>
@@ -102,10 +107,10 @@
                         <span>Access<span>
                     </a>
                     <ul class="submenu active">
-                        <li class="submenu-item @if ($submenu_session == 'permission') active @endif">
+                        <li class="submenu-item @if ($menu_session[0] == 'permission') active @endif">
                             <a href="/permission" class="submenu-link">{{ 'permission' }}</a>
                         </li>
-                        <li class="submenu-item @if ($submenu_session == 'role') active @endif">
+                        <li class="submenu-item @if ($menu_session[0] == 'role') active @endif">
                             <a href="/role" class="submenu-link">{{ 'role' }}</a>
                         </li>
                     </ul>
