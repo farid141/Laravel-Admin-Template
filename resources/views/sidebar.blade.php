@@ -54,7 +54,6 @@
             <ul class="menu">
                 {{-- MENU --}}
                 <li class="sidebar-title">Menu</li>
-
                 <li class="sidebar-item  @if ($menu_session == 'dashboard') active @endif">
                     <a href="/dashboard" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
@@ -97,32 +96,24 @@
                         </li>
                     </ul>
                 </li>
-
                 <li class="sidebar-item has-sub @if ($menu_session == 'access') active @endif">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-stack"></i>
+                        <i class="bi bi-lock-fill"></i>
                         <span>Access<span>
                     </a>
-
                     <ul class="submenu active">
-                        <li class="submenu-item @if ($submenu_session == 'user') active @endif">
-                            <a href="/user" class="submenu-link">{{ 'user' }}</a>
-                        </li>
-
                         <li class="submenu-item @if ($submenu_session == 'permission') active @endif">
                             <a href="/permission" class="submenu-link">{{ 'permission' }}</a>
                         </li>
-
                         <li class="submenu-item @if ($submenu_session == 'role') active @endif">
                             <a href="/role" class="submenu-link">{{ 'role' }}</a>
                         </li>
                     </ul>
                 </li>
-
-                <li class="sidebar-item ">
-                    <a href="/logout" class='sidebar-link'>
-                        <i class="bi bi-grid-1x2-fill"></i>
-                        <span>Logout</span>
+                <li class="sidebar-item  @if ($menu_session == 'user') active @endif">
+                    <a href="/user" class='sidebar-link'>
+                        <i class="bi bi-person-fill"></i>
+                        <span>user</span>
                     </a>
                 </li>
             </ul>
