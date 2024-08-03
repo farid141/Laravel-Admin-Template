@@ -12,9 +12,7 @@ class PermissionController extends Controller
     public function __construct()
     {
         Session::put('page_title', 'Permission');
-
-        Session::put('menu', 'access');
-        Session::put('submenu', 'permission');
+        Session::put('menu', 'Access-Permission');
     }
 
     /**

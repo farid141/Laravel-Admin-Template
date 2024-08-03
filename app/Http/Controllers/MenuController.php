@@ -13,9 +13,7 @@ class MenuController extends Controller
     public function __construct()
     {
         Session::put('page_title', 'Menu');
-
-        Session::put('menu', 'menu');
-        Session::put('submenu', 'menu');
+        Session::put('menu', 'Menu-Menu');
     }
 
     /**
@@ -42,6 +40,7 @@ class MenuController extends Controller
             'name' => ['required', 'unique:menus'],
             'order' => ['required', 'numeric',  'unique:menus,order'],
             'icon' => ['required'],
+            'has_child' => ['required'],
         ]);
         Menu::create($validated);
 
@@ -82,6 +81,7 @@ class MenuController extends Controller
             ],
             'order' => ['required', 'numeric'],
             'icon' => ['required'],
+            'has-child' => ['required'],
         ]);
         Menu::where('id', $id)->update($validated);
 

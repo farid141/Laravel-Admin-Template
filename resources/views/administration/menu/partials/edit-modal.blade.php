@@ -17,7 +17,7 @@
 
                     <div class="mb-3">
                         <label for="edit-order">Order:</label>
-                        <input type="text" placeholder="Order" class="form-control" name="order" id="edit-order"
+                        <input type="number" placeholder="Order" class="form-control" name="order" id="edit-order"
                             required>
                     </div>
 
@@ -25,6 +25,12 @@
                         <span class="input-group-text">Icon</span>
                         <input type="text" id="edit-icon" class="form-control iconpicker" placeholder="Icon"
                             aria-label="Icone Picker" aria-describedby="edit-icon" name="icon">
+                    </div>
+
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="edit-has_child"
+                            name="has_child">
+                        <label class="form-check-label" for="edit-has_child">Has Child</label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -46,6 +52,14 @@
             var formElement = $(this);
 
             removeErrorMessages(formElement);
+            // Manually handle the checkboxes
+            formElement.find('input[type=checkbox]').each(function() {
+                if (!this.checked) {
+                    formData.append(this.name, '0');
+                } else {
+                    formData.append(this.name, '1');
+                }
+            });
 
             $.ajax({
                 type: 'POST',

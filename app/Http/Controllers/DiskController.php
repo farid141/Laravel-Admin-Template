@@ -10,9 +10,7 @@ class DiskController extends Controller
     public function __construct()
     {
         Session::put('page_title', 'Disk');
-
-        Session::put('menu', 'items');
-        Session::put('submenu', 'disks');
+        Session::put('menu', 'Items-Disks');
     }
 
     public function index()

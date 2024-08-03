@@ -13,9 +13,7 @@ class UserController extends Controller
     public function __construct()
     {
         Session::put('page_title', 'User');
-
-        Session::put('menu', 'access');
-        Session::put('submenu', 'user');
+        Session::put('menu', 'User');
     }
     /**
      * Display a listing of the resource.

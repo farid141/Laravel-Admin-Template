@@ -14,9 +14,7 @@ class SubmenuController extends Controller
     public function __construct()
     {
         Session::put('page_title', 'Submenu');
-
-        Session::put('menu', 'menu');
-        Session::put('submenu', 'submenu');
+        Session::put('menu', 'Menu-Submenu');
     }
 
     /**

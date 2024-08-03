@@ -102,6 +102,7 @@
                     $('#edit-menu-form [id="edit-name"]').val(response.name);
                     $('#edit-menu-form [id="edit-order"]').val(response.order);
                     $('#edit-menu-form [id="edit-icon"]').val(response.icon);
+                    $('#edit-menu-form [id="edit-has_child"]').prop('checked', response.has_child);
                 },
                 error: function(response) {
                     showToast({

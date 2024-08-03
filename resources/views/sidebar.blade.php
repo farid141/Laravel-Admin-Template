@@ -86,39 +86,39 @@
                 {{-- Administration --}}
                 <li class="sidebar-title">Administration</li>
 
-                <li class="sidebar-item has-sub @if ($menu_session == 'menu') active @endif">
+                <li class="sidebar-item has-sub @if ($menu_session[0] == 'Menu') active @endif">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-stack"></i>
                         <span>Menu<span>
                     </a>
 
                     <ul class="submenu active">
-                        <li class="submenu-item @if ($menu_session[0] == 'menu') active @endif">
-                            <a href="/menu" class="submenu-link">{{ 'menu' }}</a>
+                        <li class="submenu-item @if (isset($menu_session[1]) && $menu_session[1] == 'Menu') active @endif">
+                            <a href="/menu" class="submenu-link">Menu</a>
                         </li>
-                        <li class="submenu-item @if ($menu_session[0] == 'submenu') active @endif">
-                            <a href="/submenu" class="submenu-link">{{ 'submenu' }}</a>
+                        <li class="submenu-item @if (isset($menu_session[1]) && $menu_session[1] == 'Submenu') active @endif">
+                            <a href="/submenu" class="submenu-link">Submenu</a>
                         </li>
                     </ul>
                 </li>
-                <li class="sidebar-item has-sub @if ($menu_session == 'access') active @endif">
+                <li class="sidebar-item has-sub @if ($menu_session[0] == 'Access') active @endif">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-lock-fill"></i>
                         <span>Access<span>
                     </a>
                     <ul class="submenu active">
-                        <li class="submenu-item @if ($menu_session[0] == 'permission') active @endif">
-                            <a href="/permission" class="submenu-link">{{ 'permission' }}</a>
+                        <li class="submenu-item @if (isset($menu_session[1]) && $menu_session[1] == 'Permission') active @endif">
+                            <a href="/permission" class="submenu-link">Permission</a>
                         </li>
-                        <li class="submenu-item @if ($menu_session[0] == 'role') active @endif">
-                            <a href="/role" class="submenu-link">{{ 'role' }}</a>
+                        <li class="submenu-item @if (isset($menu_session[1]) && $menu_session[1] == 'Role') active @endif">
+                            <a href="/role" class="submenu-link">Role</a>
                         </li>
                     </ul>
                 </li>
-                <li class="sidebar-item  @if ($menu_session == 'user') active @endif">
+                <li class="sidebar-item  @if ($menu_session[0] == 'User') active @endif">
                     <a href="/user" class='sidebar-link'>
                         <i class="bi bi-person-fill"></i>
-                        <span>user</span>
+                        <span>User</span>
                     </a>
                 </li>
             </ul>

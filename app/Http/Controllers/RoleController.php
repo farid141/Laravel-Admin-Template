@@ -12,10 +12,8 @@ class RoleController extends Controller
 {
     public function __construct()
     {
-        Session::put('page_title', 'role');
-
-        Session::put('menu', 'access');
-        Session::put('submenu', 'role');
+        Session::put('page_title', 'Role');
+        Session::put('menu', 'Access-Role');
     }
 
     /**
