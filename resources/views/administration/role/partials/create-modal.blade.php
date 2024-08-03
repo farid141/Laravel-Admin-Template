@@ -15,20 +15,13 @@
                     </div>
 
                     <div>
-                        <label for="">Permissions</label>
-                        @foreach ($grouppedPermissions as $permissions)
-                            <div class="row ps-3">
-                                @foreach ($permissions as $permission)
-                                    <div class="form-check col-2">
-                                        <input class="form-check-input" type="checkbox"
-                                            id="create-{{ trim($permission) }}" name="permissions[]"
-                                            value="{{ $permission }}">
-                                        <label class="form-check-label"
-                                            for="create-{{ trim($permission) }}">{{ $permission }}</label>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @endforeach
+                        <label for="create-permissions">Permissions</label>
+                        <select id="create-permissions" multiple="multiple" style="width: 100%;" class="select2"
+                            name="permissions[]">
+                            @foreach ($permissions as $permission)
+                                <option value="{{ $permission }}">{{ $permission }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -46,7 +39,7 @@
             e.preventDefault();
             var formData = new FormData(this);
             var formElement = $(this);
-            removeErrorMessages();
+            removeErrorMessages(formElement);
 
             $.ajax({
                 type: 'POST',

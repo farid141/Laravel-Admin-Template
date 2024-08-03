@@ -23,6 +23,13 @@
 @push('scripts')
     <script>
         var dt = null;
+
+        $('#create-permissions').select2({
+            dropdownParent: $('#create-role-modal')
+        });
+        $('#edit-permissions').select2({
+            dropdownParent: $('#edit-role-modal')
+        });
         // Datatable definition
         dt = $('.datatable').DataTable({
             ajax: {
@@ -83,15 +90,11 @@
                 success: function(response) {
                     $('#edit-role-form [name="name"]').val(response.name);
 
-                    // find all checkboxes and uncheck them
-                    $('#edit-role-form :checkbox').prop('checked', false);
-
-                    // check if the data contain the checkbox
-                    response.permissions.forEach(function(permission) {
-                        $('#edit-role-form #edit-' + permission.name.replace(/\s/g,
-                            '\\ ')).prop('checked',
-                            true);
+                    var permissions = response.permissions.map(function(item) {
+                        return item.name;
                     });
+                    $('#edit-permissions').val(permissions).trigger('change');
+                    console.log(permissions);
                 },
                 error: function(response) {
                     showToast({
@@ -135,3 +138,5 @@
         });
     </script>
 @endpush
+@include('administration.role.partials.edit-modal')
+@include('administration.role.partials.create-modal')

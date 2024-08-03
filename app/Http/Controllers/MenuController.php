@@ -81,7 +81,7 @@ class MenuController extends Controller
             ],
             'order' => ['required', 'numeric'],
             'icon' => ['required'],
-            'has-child' => ['required'],
+            'has_child' => ['required'],
         ]);
         Menu::where('id', $id)->update($validated);
 

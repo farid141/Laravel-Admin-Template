@@ -25,12 +25,9 @@ class RoleController extends Controller
         if (request()->ajax()) {
             return $roles;
         }
-        $grouppedPermissions = Permission::all()->pluck('name')->sort()
-            ->groupBy(function ($item) {
-                return explode(' ', $item)[1];
-            });
+        $permissions = Permission::all()->pluck('name')->toArray();
 
-        return view('administration.role.index', compact('roles', 'grouppedPermissions'));
+        return view('administration.role.index', compact('roles', 'permissions'));
     }
 
     /**

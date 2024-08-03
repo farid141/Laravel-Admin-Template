@@ -17,20 +17,12 @@
                     </div>
 
                     <div>
-                        <label for="">Permissions</label>
-                        @foreach ($grouppedPermissions as $permissions)
-                            <div class="row ps-3">
-                                @foreach ($permissions as $permission)
-                                    <div class="form-check col-2">
-                                        <input class="form-check-input" type="checkbox"
-                                            id="edit-{{ trim($permission) }}" name="permissions[]"
-                                            value="{{ $permission }}">
-                                        <label class="form-check-label"
-                                            for="edit-{{ trim($permission) }}">{{ $permission }}</label>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @endforeach
+                        <label for="edit-permissions">Permissions</label>
+                        <select id="edit-permissions" multiple="multiple" style="width: 100%;" name="permissions[]">
+                            @foreach ($permissions as $permission)
+                                <option value="{{ $permission }}">{{ $permission }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">

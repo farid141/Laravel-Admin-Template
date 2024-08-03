@@ -25,7 +25,9 @@ class PermissionController extends Controller
             return $permissions;
         }
 
-        return view('administration.permission.index', compact('permissions'));
+        $actions = ['viewAny', 'view', 'create', 'update', 'delete'];
+
+        return view('administration.permission.index', compact('permissions', 'actions'));
     }
 
     /**
@@ -34,13 +36,16 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => ['required', 'unique:permissions'],
+            'permissions' => 'required|array',
+            'permissions.*' => ['required', 'unique:permissions,name'],
         ]);
 
-        Permission::create(['name' => $validated['name']]);
+        foreach ($validated['permissions'] as $permission) {
+            Permission::create(['name' => $permission]);
+        }
 
         return Response()->json([
-            'content' => 'Permission ' . $validated['name'] . ' created!',
+            'content' => 'Permission ' . implode(',', $validated['permissions']) . ' created!',
             'type' => 'success' // or 'error'
         ]);
     }
