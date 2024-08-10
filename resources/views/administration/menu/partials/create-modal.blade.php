@@ -10,26 +10,30 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="create-name">Menu Name:</label>
-                        <input type="text" placeholder="Menu Name" class="form-control" name="name"
-                            id="create-name" required>
+                        <input type="text" class="form-control" name="name" id="create-name" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="create-order">Order:</label>
-                        <input type="number" placeholder="Order" class="form-control" name="order" id="create-order"
-                            required>
+                        <input type="number" class="form-control" name="order" id="create-order" required>
                     </div>
 
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3" data-bs-theme="light">
                         <span class="input-group-text">Icon</span>
-                        <input type="text" id="create-icon" class="form-control iconpicker" placeholder="Icon"
-                            aria-label="Icone Picker" aria-describedby="create-icon" name="icon">
+                        <input type="text" id="create-icon" class="form-control iconpicker" aria-label="Icone Picker"
+                            aria-describedby="create-icon" name="icon" data-bs-theme="light">
                     </div>
 
-                    <div class="form-check form-switch">
+                    <div class="form-check form-switch mb-3">
                         <input class="form-check-input" type="checkbox" role="switch" id="create-has_child"
                             name="has_child">
                         <label class="form-check-label" for="create-has_child">Has Child</label>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="create-url">Url</label>
+                        <input type="text" id="create-url" class="form-control" aria-describedby="create-url"
+                            name="url">
                     </div>
                 </div>
 
@@ -50,15 +54,6 @@
             var formElement = $(this);
             removeErrorMessages(formElement);
 
-            // Manually handle the checkboxes
-            formElement.find('input[type=checkbox]').each(function() {
-                if (!this.checked) {
-                    formData.append(this.name, '0');
-                } else {
-                    formData.append(this.name, '1');
-                }
-            });
-
             $.ajax({
                 type: 'POST',
                 data: formData,
@@ -69,6 +64,7 @@
                     showToast(data);
                     $("#create-menu-modal").modal('hide');
                     dt.ajax.reload(null, false); // refresh datatable
+                    emptyForm(formElement);
                 },
                 error: function(xhr) {
                     // error laravel validation
@@ -85,6 +81,15 @@
                     });
                 }
             });
+        });
+
+        $('#create-has_child').on('click', function() {
+            if ($(this).prop('checked')) {
+                $('#create-url').attr('disabled', true);
+                $('#create-url').val('');
+            } else {
+                $('#create-url').attr('disabled', false);
+            }
         });
     </script>
 @endpush

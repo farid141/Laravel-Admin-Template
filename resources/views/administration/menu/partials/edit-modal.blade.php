@@ -11,26 +11,30 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="edit-name">Menu Name:</label>
-                        <input type="text" placeholder="Menu Name" class="form-control" name="name" id="edit-name"
-                            required>
+                        <input type="text" class="form-control" name="name" id="edit-name" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="edit-order">Order:</label>
-                        <input type="number" placeholder="Order" class="form-control" name="order" id="edit-order"
-                            required>
+                        <input type="number" class="form-control" name="order" id="edit-order" required>
                     </div>
 
                     <div class="input-group mb-3">
                         <span class="input-group-text">Icon</span>
-                        <input type="text" id="edit-icon" class="form-control iconpicker" placeholder="Icon"
-                            aria-label="Icone Picker" aria-describedby="edit-icon" name="icon">
+                        <input type="text" id="edit-icon" class="form-control iconpicker" aria-label="Icone Picker"
+                            aria-describedby="edit-icon" name="icon">
                     </div>
 
-                    <div class="form-check form-switch">
+                    <div class="form-check form-switch mb-3">
                         <input class="form-check-input" type="checkbox" role="switch" id="edit-has_child"
                             name="has_child">
                         <label class="form-check-label" for="edit-has_child">Has Child</label>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edit-url">Url</label>
+                        <input type="text" id="edit-url" class="form-control" aria-describedby="edit-url"
+                            name="url" disabled>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -52,14 +56,6 @@
             var formElement = $(this);
 
             removeErrorMessages(formElement);
-            // Manually handle the checkboxes
-            formElement.find('input[type=checkbox]').each(function() {
-                if (!this.checked) {
-                    formData.append(this.name, '0');
-                } else {
-                    formData.append(this.name, '1');
-                }
-            });
 
             $.ajax({
                 type: 'POST',
@@ -72,6 +68,7 @@
                     showToast(data);
                     $("#edit-menu-modal").modal('hide');
                     dt.ajax.reload(null, false); // reload datatable
+                    emptyForm(formElement);
                 },
                 error: function(xhr) {
                     // error laravel validation
@@ -88,6 +85,15 @@
                     });
                 }
             });
+        });
+
+        $('#edit-has_child').on('click', function() {
+            if ($(this).prop('checked')) {
+                $('#edit-url').attr('disabled', true);
+                $('#edit-url').val('');
+            } else {
+                $('#edit-url').attr('disabled', false);
+            }
         });
     </script>
 @endpush

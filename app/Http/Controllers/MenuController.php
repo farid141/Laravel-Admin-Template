@@ -40,8 +40,11 @@ class MenuController extends Controller
             'name' => ['required', 'unique:menus'],
             'order' => ['required', 'numeric',  'unique:menus,order'],
             'icon' => ['required'],
-            'has_child' => ['required'],
+            'has_child' => 'sometimes|accepted',
+            'url' => ['required_unless:has_child,on'],
         ]);
+
+        $validated['has_child'] = $request->has('has_child') ? 1 : 0;
         Menu::create($validated);
 
         return Response()->json([
@@ -77,12 +80,15 @@ class MenuController extends Controller
         $validated = $request->validate([
             'name' => [
                 'required',
-                Rule::unique('submenus', 'name')->ignore($id)
+                Rule::unique('menus', 'name')->ignore($id)
             ],
             'order' => ['required', 'numeric'],
             'icon' => ['required'],
-            'has_child' => ['required'],
+            'has_child' => 'sometimes|accepted',
+            'url' => ['required_unless:has_child,on'],
         ]);
+
+        $validated['has_child'] = $request->has('has_child') ? 1 : 0;
         Menu::where('id', $id)->update($validated);
 
         return Response()->json([

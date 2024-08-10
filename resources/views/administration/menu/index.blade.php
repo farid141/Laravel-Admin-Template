@@ -19,6 +19,9 @@
         <tbody>
         </tbody>
     </table>
+
+    @include('administration.menu.partials.create-modal')
+    @include('administration.menu.partials.edit-modal')
 @endsection
 
 @push('scripts')
@@ -82,6 +85,7 @@
         $('#create-menu-modal').on('shown.bs.modal', (e) => {
             if ($('html').attr('data-bs-theme') == 'dark') {
                 $('#create-icon').trigger('focus'); // due too UI error when dark mode
+                $('#create-url').trigger('mouseup'); // due too UI error when dark mode
             }
         });
 
@@ -93,6 +97,7 @@
 
             if ($('html').attr('data-bs-theme') == 'dark') {
                 $('#edit-icon').trigger('focus'); // due too UI error when dark mode
+                $('#edit-url').trigger('mouseup'); // due too UI error when dark mode
             }
 
             $.ajax({
@@ -103,6 +108,14 @@
                     $('#edit-menu-form [id="edit-order"]').val(response.order);
                     $('#edit-menu-form [id="edit-icon"]').val(response.icon);
                     $('#edit-menu-form [id="edit-has_child"]').prop('checked', response.has_child);
+
+                    if (response.has_child) {
+                        $('#edit-url').attr('disabled', true);
+                        $('#edit-url').val('');
+                    } else {
+                        $('#edit-url').attr('disabled', false);
+                        $('#edit-menu-form [id="edit-url"]').val(response.url);
+                    }
                 },
                 error: function(response) {
                     showToast({
@@ -154,6 +167,3 @@
         });
     </script>
 @endpush
-
-@include('administration.menu.partials.create-modal')
-@include('administration.menu.partials.edit-modal')

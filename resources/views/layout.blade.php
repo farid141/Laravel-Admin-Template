@@ -194,6 +194,12 @@
             else
                 $(this).find('i').removeClass('bi-eye').addClass('bi-eye-slash');
         });
+
+        function emptyForm(formSelector) {
+            formSelector.find('[name]').val('');
+            formSelector.find('[type="checkbox"]').prop('checked', false);
+            formSelector.find('option[value=""]').attr('selected', true);
+        }
     </script>
 
     {{-- toastify --}}

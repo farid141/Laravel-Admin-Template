@@ -23,11 +23,12 @@ class SubmenuController extends Controller
     public function index()
     {
         $submenus = Submenu::with('menu')->get();
-        $menus = Menu::all();
 
         if (request()->ajax()) {
             return $submenus;
         }
+
+        $menus = Menu::where('has_child', 1)->get();
         $permissions = ['view', 'viewAny', 'create', 'update', 'delete'];
         return view('administration.submenu.index', compact('submenus', 'menus', 'permissions'));
     }
@@ -86,7 +87,8 @@ class SubmenuController extends Controller
                 Rule::unique('submenus', 'name')->ignore($id)
             ],
             'order' => [
-                'required', 'numeric',
+                'required',
+                'numeric',
                 Rule::unique('submenus', 'order')->where(function ($query) use ($request) {
                     return $query->where('menu_id', $request->menu_id);
                 })->ignore($id)
