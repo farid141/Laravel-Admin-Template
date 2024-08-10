@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="{{ asset('assets/compiled/css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/compiled/css/app-dark.asset') }}">
     <link rel="stylesheet" href="{{ asset('assets/compiled/css/auth.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 </head>
 
 <body>
@@ -46,10 +48,15 @@
                             @enderror
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="password" class="form-control form-control-xl" placeholder="Password"
-                                name="password">
-                            <div class="form-control-icon">
-                                <i class="bi bi-shield-lock"></i>
+                            <div class="input-group">
+                                <input type="password" class="form-control form-control-xl password"
+                                    placeholder="Password" name="password">
+                                <div class="form-control-icon">
+                                    <i class="bi bi-shield-lock"></i>
+                                </div>
+                                <span class="input-group-text toggle-password" style="cursor: pointer">
+                                    <i class="bi bi-eye-slash" id="toggleIcon"></i>
+                                </span>
                             </div>
                         </div>
                         <div class="form-check form-check-lg d-flex align-items-end">
@@ -76,6 +83,20 @@
         </div>
 
     </div>
+
+    <script>
+        $(document).on('click', '.toggle-password', function(e) {
+            var password = $(this).siblings('.password');
+            // toggle the type attribute
+            const type = password.attr("type") === "password" ? "text" : "password";
+            password.attr("type", type);
+            // toggle the eye icon
+            if (type === "text")
+                $(this).find('i').removeClass('bi-eye-slash').addClass('bi-eye');
+            else
+                $(this).find('i').removeClass('bi-eye').addClass('bi-eye-slash');
+        });
+    </script>
 </body>
 
 </html>

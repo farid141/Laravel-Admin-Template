@@ -182,6 +182,18 @@
                 iconpickerItem: '<a role="button" href="javascript:;" class="iconpicker-item"><i></i></a>'
             }
         });
+
+        $(document).on('click', '.toggle-password', function(e) {
+            var password = $(this).siblings('.password');
+            // toggle the type attribute
+            const type = password.attr("type") === "password" ? "text" : "password";
+            password.attr("type", type);
+            // toggle the eye icon
+            if (type === "text")
+                $(this).find('i').removeClass('bi-eye-slash').addClass('bi-eye');
+            else
+                $(this).find('i').removeClass('bi-eye').addClass('bi-eye-slash');
+        });
     </script>
 
     {{-- toastify --}}

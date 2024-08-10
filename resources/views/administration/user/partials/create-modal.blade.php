@@ -28,13 +28,23 @@
                     </div>
                     <div class="mb-3">
                         <label for="create-password">Password:</label>
-                        <input id="create-password" type="password" placeholder="Password" class="form-control"
-                            name="password" required>
+                        <div class="input-group">
+                            <input id="create-password" type="password" class="form-control password" name="password"
+                                required>
+                            <span class="input-group-text toggle-password" style="cursor: pointer">
+                                <i class="bi bi-eye-slash" id="toggleIcon"></i>
+                            </span>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="create-password_confirmation">Confirm Password:</label>
-                        <input id="create-password_confirmation" type="password" placeholder="Confirm Password"
-                            class="form-control" name="password_confirmation" required>
+                        <div class="input-group">
+                            <input id="create-password_confirmation" type="password" class="form-control password"
+                                name="password_confirmation" required>
+                            <span class="input-group-text toggle-password" style="cursor: pointer">
+                                <i class="bi bi-eye-slash" id="toggleIcon"></i>
+                            </span>
+                        </div>
                     </div>
 
                 </div>
