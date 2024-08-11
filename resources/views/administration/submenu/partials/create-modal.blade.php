@@ -107,9 +107,9 @@
                         let errors = xhr.responseJSON.errors;
                         displayErrorMessages(errors, formElement, 'create');
                     } else if (xhr.status === 403) {
-                        swal("Error", "Unauthorized Acess.", "error");
+                        swal.fire("Error", "Unauthorized Acess.", "error");
                     } else {
-                        swal("Error", "An unexpected error occurred.", "error");
+                        swal.fire("Error", "An unexpected error occurred.", "error");
                     }
 
                     showToast({

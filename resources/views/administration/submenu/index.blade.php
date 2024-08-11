@@ -93,19 +93,16 @@
                 type: "GET",
                 url: url,
                 success: function(response) {
-                    $(`#edit-submenu-form [id="edit-menu_id"] option[value="${response.menu.id}"]`)
-                        .prop('selected',
-                            true);
-                    $('#edit-submenu-form [id="edit-name"]').val(response.name);
-                    $('#edit-submenu-form [id="edit-url"]').val(response.url);
-                    $('#edit-submenu-form [id="edit-order"]').val(response.order);
+                    $(`#edit-menu_id option[value="${response.menu.id}"]`).prop('selected', true);
+                    $('#edit-name').val(response.name);
+                    $('#edit-url').val(response.url);
+                    $('#edit-order').val(response.order);
                 },
-                error: function(response) {
+                error: function(xhr) {
                     if (xhr.status === 403) {
-                        swal("Error", "Unauthorized Acess.", "error");
-                    }
-                    if (xhr.status === 403) {
-                        swal("Error", "Unexpected Error.", "error");
+                        swal.fire("Error", "Unauthorized Acess.", "error");
+                    } else {
+                        swal.fire("Error", "Unexpected Error.", "error");
                     }
                 }
             });
@@ -132,11 +129,12 @@
                             showToast(data);
                             dt.ajax.reload(null, false);
                         },
-                        error: function(data) {
-                            showToast({
-                                content: 'Delete submenu failed',
-                                type: 'error'
-                            });
+                        error: function(xhr) {
+                            if (xhr.status === 403) {
+                                swal.fire("Error", "Unauthorized Acess.", "error");
+                            } else {
+                                swal.fire("Error", "Unexpected Error.", "error");
+                            }
                         }
                     });
                 }

@@ -112,10 +112,10 @@
                 type: "GET",
                 url: url,
                 success: function(response) {
-                    $('#edit-menu-form [id="edit-name"]').val(response.name);
-                    $('#edit-menu-form [id="edit-order"]').val(response.order);
-                    $('#edit-menu-form [id="edit-icon"]').val(response.icon);
-                    $('#edit-menu-form [id="edit-has_child"]').prop('checked', response.has_child);
+                    $('#edit-name').val(response.name);
+                    $('#edit-order').val(response.order);
+                    $('#edit-icon').val(response.icon);
+                    $('#edit-has_child').prop('checked', response.has_child);
 
                     if (response.has_child) {
                         $('#edit-url').attr('disabled', true);
@@ -125,11 +125,11 @@
                         $('#edit-menu-form [id="edit-url"]').val(response.url);
                     }
                 },
-                error: function(response) {
+                error: function(xhr) {
                     if (xhr.status === 403) {
-                        swal("Error", "Unauthorized Acess.", "error");
+                        swal.fire("Error", "Unauthorized Acess.", "error");
                     } else {
-                        swal("Error", "Unexpected Error.", "error");
+                        swal.fire("Error", "Unexpected Error.", "error");
                     }
                 }
             });
@@ -164,11 +164,12 @@
                             showToast(data);
                             dt.ajax.reload(null, false);
                         },
-                        error: function(data) {
-                            showToast({
-                                content: 'delete menu failed',
-                                type: 'error'
-                            });
+                        error: function(xhr) {
+                            if (xhr.status === 403) {
+                                swal.fire("Error", "Unauthorized Acess.", "error");
+                            } else {
+                                swal.fire("Error", "Unexpected Error.", "error");
+                            }
                         }
                     });
                 }

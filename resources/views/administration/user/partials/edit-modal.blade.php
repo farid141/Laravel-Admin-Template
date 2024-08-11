@@ -25,6 +25,26 @@
                         <label for="edit-email">Email:</label>
                         <input id="edit-email" type="email" class="form-control" name="email" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="edit-password">Password:</label>
+                        <div class="input-group">
+                            <input id="edit-password" type="password" class="form-control password" name="password"
+                                required>
+                            <span class="input-group-text toggle-password" style="cursor: pointer">
+                                <i class="bi bi-eye-slash" id="toggleIcon"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-password_confirmation">Confirm Password:</label>
+                        <div class="input-group">
+                            <input id="edit-password_confirmation" type="password" class="form-control password"
+                                name="password_confirmation" required>
+                            <span class="input-group-text toggle-password" style="cursor: pointer">
+                                <i class="bi bi-eye-slash" id="toggleIcon"></i>
+                            </span>
+                        </div>
+                    </div>
 
                 </div>
                 <div class="modal-footer">
@@ -65,9 +85,9 @@
                         let errors = xhr.responseJSON.errors;
                         displayErrorMessages(errors, formElement, 'edit');
                     } else if (xhr.status === 403) {
-                        swal("Error", "Unauthorized Acess.", "error");
+                        swal.fire("Error", "Unauthorized Acess.", "error");
                     } else {
-                        swal("Error", "An unexpected error occurred.", "error");
+                        swal.fire("Error", "An unexpected error occurred.", "error");
                     }
 
                     showToast({

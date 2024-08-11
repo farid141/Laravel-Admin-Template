@@ -35,7 +35,6 @@
             var id = $(this).data('id');
             var url = "{{ route('permission.update', ['permission' => ':id']) }}".replace(':id', id);
             var formElement = $(this);
-
             $.ajax({
                 type: 'POST',
                 url: url,
@@ -56,9 +55,9 @@
                         let errors = xhr.responseJSON.errors;
                         displayErrorMessages(errors, formElement, 'edit');
                     } else if (xhr.status === 403) {
-                        swal("Error", "Unauthorized Acess.", "error");
+                        swal.fire("Error", "Unauthorized Acess.", "error");
                     } else {
-                        swal("Error", "An unexpected error occurred.", "error");
+                        swal.fire("Error", "An unexpected error occurred.", "error");
                     }
 
                     showToast({

@@ -86,12 +86,13 @@ class UserController extends Controller
                 'required',
                 Rule::unique('users', 'email')->ignore($id)
             ],
-            'role' => ['required', 'exists:roles,name']
+            'role' => ['required', 'exists:roles,name'],
+            'password' => ['required', 'confirmed', 'min:5'],
         ]);
 
         $user = User::find($id);
         $user->syncRoles([$request['role']]);
-        $user->update(collect($request)->only(['name', 'email'])->toArray());
+        $user->update(collect($request)->only(['name', 'email', 'password'])->toArray());
 
         return Response()->json([
             'content' => 'user updated!',

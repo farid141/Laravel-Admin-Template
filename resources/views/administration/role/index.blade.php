@@ -92,11 +92,11 @@
                     });
                     $('#edit-permissions').val(permissions).trigger('change');
                 },
-                error: function(response) {
+                error: function(xhr) {
                     if (xhr.status === 403) {
-                        swal("Error", "Unauthorized Acess.", "error");
+                        swal.fire("Error", "Unauthorized Acess.", "error");
                     } else {
-                        swal("Error", "Unexpected Error.", "error");
+                        swal.fire("Error", "Unexpected Error.", "error");
                     }
                 }
             });
@@ -123,11 +123,12 @@
                             showToast(data);
                             dt.ajax.reload(null, false);
                         },
-                        error: function(data) {
-                            showToast({
-                                content: 'delete role failed',
-                                type: 'error'
-                            });
+                        error: function(xhr) {
+                            if (xhr.status === 403) {
+                                swal.fire("Error", "Unauthorized Acess.", "error");
+                            } else {
+                                swal.fire("Error", "Unexpected Error.", "error");
+                            }
                         }
                     });
                 }
