@@ -1,0 +1,90 @@
+/* Container styling */
+html[data-bs-theme="dark"] .select2-container--default .select2-selection--multiple {
+    background-color: #333;
+    /* Dark background */
+    border: 1px solid #555;
+    /* Custom border color */
+    color: #fff;
+    /* Light text color */
+    min-height: 38px;
+    /* Ensure a minimum height */
+    border-radius: 4px;
+    /* Rounded corners */
+}
+
+/* Styling for selected items (tags) */
+html[data-bs-theme="dark"] .select2-container--default .select2-selection__choice {
+    background-color: #444;
+    /* Darker background for selected items */
+    color: #fff;
+    /* Light text color for selected items */
+    border: 1px solid #555;
+    /* Border for selected items */
+}
+
+/* Hover effect for selected items */
+html[data-bs-theme="dark"] .select2-container--default .select2-selection__choice:hover {
+    background-color: #555;
+    /* Slightly lighter on hover */
+    border-color: #666;
+    /* Change border on hover */
+}
+
+/* Styling for remove button (X) */
+html[data-bs-theme="dark"] .select2-container--default .select2-selection__choice__remove {
+    color: #ddd;
+    /* Light color for the remove button */
+    margin-right: 5px;
+    /* Spacing from the text */
+}
+
+html[data-bs-theme="dark"] .select2-container--default .select2-selection__choice__remove:hover {
+    color: #fff;
+    /* Brighter color on hover */
+}
+
+/* Search box styling */
+html[data-bs-theme="dark"] .select2-container--default .select2-search--inline .select2-search__field {
+    background-color: #333;
+    /* Match the background */
+    color: #fff;
+    /* Light text */
+    border: none;
+    /* Remove border */
+    outline: none;
+    /* Remove default focus outline */
+}
+
+/* Dropdown styling */
+html[data-bs-theme="dark"] .select2-container--default .select2-dropdown {
+    background-color: #444;
+    /* Dark background for dropdown */
+    border: 1px solid #555;
+    /* Border color */
+    color: #fff;
+    /* Light text color */
+}
+
+/* Styling for dropdown items */
+html[data-bs-theme="dark"] .select2-container--default .select2-results__option--selected {
+    padding: 8px 12px;
+    /* Padding for dropdown items */
+    background-color: #b4b4b4;
+}
+
+html[data-bs-theme="dark"] .select2-results__options {
+    padding: 0px;
+}
+
+/* Hover effect for dropdown items */
+html[data-bs-theme="dark"] .select2-container--default .select2-results__option--highlighted {
+    background-color: #555;
+    /* Highlight background on hover */
+    color: #fff;
+    /* Ensure text is visible */
+}
+
+/* Disable autocomplete */
+html[data-bs-theme="dark"] .select2-search__field {
+    autocomplete: off !important;
+}

@@ -1,0 +1,55 @@
+/* Dark theme overrides when data-bs-theme="dark" */
+html[data-bs-theme="dark"] .iconpicker-popover.popover {
+    background-color: #1a1a1a;
+    /* Dark background color */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    /* Light border color */
+}
+
+html[data-bs-theme="dark"] .iconpicker-popover.popover .popover-title,
+html[data-bs-theme="dark"] .iconpicker-popover .popover-footer {
+    background-color: #2a2a2a;
+    /* Dark background for title and footer */
+    color: #ffffff;
+    /* Light text color */
+    border-color: rgba(255, 255, 255, 0.2);
+    /* Light border color */
+}
+
+html[data-bs-theme="dark"] .iconpicker .iconpicker-items {
+    background: #2a2a2a;
+    /* Dark background for items */
+}
+
+html[data-bs-theme="dark"] .iconpicker .iconpicker-item {
+    box-shadow: 0 0 0 1px #555;
+    /* Darker shadow color */
+    color: #ffffff;
+    /* Light icon color */
+}
+
+html[data-bs-theme="dark"] .iconpicker .iconpicker-item:hover:not(.iconpicker-selected) {
+    background-color: #333;
+    /* Darker hover background */
+}
+
+html[data-bs-theme="dark"] .iconpicker .iconpicker-item.iconpicker-selected {
+    color: #ffffff;
+    /* Light color for selected icon */
+    background: #444;
+    /* Darker background for selected icon */
+}
+
+html[data-bs-theme="dark"] .iconpicker-popover.popover>.arrow,
+html[data-bs-theme="dark"] .iconpicker-popover.popover>.arrow:after {
+    border-top-color: rgba(255, 255, 255, 0.25);
+    /* Light arrow color */
+}
+
+html[data-bs-theme="dark"] .iconpicker-popover.popover.top>.arrow:after,
+html[data-bs-theme="dark"] .iconpicker-popover.popover.right>.arrow:after,
+html[data-bs-theme="dark"] .iconpicker-popover.popover.bottom>.arrow:after,
+html[data-bs-theme="dark"] .iconpicker-popover.popover.left>.arrow:after {
+    border-top-color: #1a1a1a;
+    /* Dark background color for arrow */
+}
