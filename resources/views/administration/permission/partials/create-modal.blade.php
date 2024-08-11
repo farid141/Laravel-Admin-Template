@@ -13,7 +13,7 @@
                         <label for="create-name">Permission Name:</label>
                         <input id="create-name" type="text" class="form-control" name="name" required>
                     </div>
-                    <div class="input-group mb3">
+                    <div class="input-group mb3" id="permission-group">
                         @foreach ($actions as $action)
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="checkbox" id="{{ $action }}-action-checkbox"
@@ -61,7 +61,7 @@
 
             // Collect selected permissions
             var selectedPermissions = [];
-            $('.form-check-input:checked').each(function() {
+            $('#permission-group .form-check-input:checked').each(function() {
                 if (this.id == 'action-checkbox')
                     formData.append('permissions[]', $('#action-name').val() + '~' + permissionName);
                 else
