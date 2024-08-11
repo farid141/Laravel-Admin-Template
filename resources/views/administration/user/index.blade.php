@@ -96,6 +96,11 @@
                         true);
                 },
                 error: function(response) {
+                    if (xhr.status === 403) {
+                        swal("Error", "Unauthorized Acess.", "error");
+                    } else {
+                        swal("Error", "Unexpected Error.", "error");
+                    }
                     showToast({
                         content: 'server error',
                         type: 'error'

@@ -75,6 +75,8 @@
                     if (xhr.status === 422) {
                         let errors = xhr.responseJSON.errors;
                         displayErrorMessages(errors, formElement, 'edit');
+                    } else if (xhr.status === 403) {
+                        swal("Error", "Unauthorized Acess.", "error");
                     } else {
                         swal("Error", "An unexpected error occurred.", "error");
                     }

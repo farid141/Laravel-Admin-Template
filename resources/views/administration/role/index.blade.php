@@ -91,13 +91,13 @@
                         return item.name;
                     });
                     $('#edit-permissions').val(permissions).trigger('change');
-                    console.log(permissions);
                 },
                 error: function(response) {
-                    showToast({
-                        content: 'server error',
-                        type: 'error'
-                    });
+                    if (xhr.status === 403) {
+                        swal("Error", "Unauthorized Acess.", "error");
+                    } else {
+                        swal("Error", "Unexpected Error.", "error");
+                    }
                 }
             });
         });

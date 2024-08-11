@@ -35,7 +35,6 @@
             var id = $(this).data('id');
             var url = "{{ route('permission.update', ['permission' => ':id']) }}".replace(':id', id);
             var formElement = $(this);
-            removeErrorMessages(formElement);
 
             $.ajax({
                 type: 'POST',
@@ -48,12 +47,16 @@
                     showToast(data);
                     $("#edit-permission-modal").modal('hide');
                     dt.ajax.reload(null, false);
+                    emptyForm(formElement);
+                    removeErrorMessages(formElement);
                 },
                 error: function(xhr) {
                     // error laravel validation
                     if (xhr.status === 422) {
                         let errors = xhr.responseJSON.errors;
                         displayErrorMessages(errors, formElement, 'edit');
+                    } else if (xhr.status === 403) {
+                        swal("Error", "Unauthorized Acess.", "error");
                     } else {
                         swal("Error", "An unexpected error occurred.", "error");
                     }

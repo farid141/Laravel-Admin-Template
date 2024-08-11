@@ -86,10 +86,11 @@
                     $('#edit-permission-form [name="name"]').val(response.name);
                 },
                 error: function(response) {
-                    showToast({
-                        content: 'An unexpected error',
-                        type: 'error'
-                    });
+                    if (xhr.status === 403) {
+                        swal("Error", "Unauthorized Acess.", "error");
+                    } else {
+                        swal("Error", "Unexpected Error.", "error");
+                    }
                 }
             });
         });
