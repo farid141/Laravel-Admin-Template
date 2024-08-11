@@ -20,6 +20,9 @@ class PermissionController extends Controller
      */
     public function index()
     {
+        if (!(request()->user()->can('viewAny~Access-Permission')))
+            return abort(403, 'unauthorized access');
+
         $permissions = Permission::all();
         if (request()->ajax()) {
             return $permissions;
@@ -35,6 +38,9 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
+        if (!(request()->user()->can('create~Access-Permission')))
+            return abort(403, 'unauthorized access');
+
         $validated = $request->validate([
             'permissions' => 'required|array',
             'permissions.*' => ['required', 'unique:permissions,name'],
@@ -55,6 +61,9 @@ class PermissionController extends Controller
      */
     public function edit(string $id)
     {
+        if (!(request()->user()->can('update~Access-Permission')))
+            return abort(403, 'unauthorized access');
+
         $permission = Permission::with('permissions')->find($id);
         return Response()->json($permission);
     }
@@ -64,6 +73,9 @@ class PermissionController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (!(request()->user()->can('update~Access-Permission')))
+            return abort(403, 'unauthorized access');
+
         $validated = $request->validate([
             'name' => ['required', Rule::unique('permissions', 'name')->ignore($id)],
         ]);
@@ -82,6 +94,9 @@ class PermissionController extends Controller
      */
     public function destroy(string $id)
     {
+        if (!(request()->user()->can('delete~Access-Permission')))
+            return abort(403, 'unauthorized access');
+
         $permission = Permission::find($id);
         $permission->delete();
 

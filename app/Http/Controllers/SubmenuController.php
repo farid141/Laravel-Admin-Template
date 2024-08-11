@@ -22,6 +22,9 @@ class SubmenuController extends Controller
      */
     public function index()
     {
+        if (!(request()->user()->can('viewAny~Menu-Submenu')))
+            return abort(403, 'unauthorized access');
+
         $submenus = Submenu::with('menu')->get();
 
         if (request()->ajax()) {
@@ -38,6 +41,9 @@ class SubmenuController extends Controller
      */
     public function store(Request $request)
     {
+        if (!(request()->user()->can('create~Menu-Submenu')))
+            return abort(403, 'unauthorized access');
+
         $validated = $request->validate([
             'menu_id' => ['required', 'exists:menus,id'],
             'name' => ['required', 'unique:submenus'],
@@ -71,6 +77,9 @@ class SubmenuController extends Controller
      */
     public function edit(string $id)
     {
+        if (!(request()->user()->can('update~Menu-Submenu')))
+            return abort(403, 'unauthorized access');
+
         $submenu = Submenu::with(['menu'])->find($id);
         return Response()->json($submenu);
     }
@@ -80,6 +89,9 @@ class SubmenuController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (!(request()->user()->can('update~Menu-Submenu')))
+            return abort(403, 'unauthorized access');
+
         $validated = $request->validate([
             'menu_id' => ['required', 'exists:menus,id'],
             'name' => [
@@ -108,6 +120,9 @@ class SubmenuController extends Controller
      */
     public function destroy(string $id)
     {
+        if (!(request()->user()->can('delete~Menu-Submenu')))
+            return abort(403, 'unauthorized access');
+
         $submenu = Submenu::find($id);
         $submenu->delete();
 

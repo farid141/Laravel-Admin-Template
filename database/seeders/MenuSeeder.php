@@ -15,33 +15,28 @@ class MenuSeeder extends Seeder
     public function run(): void
     {
         Menu::firstOrCreate([
-            'name' => 'members',
+            'name' => 'Members',
             'order' => 1,
             'icon' => 'test',
-            'has_child' => true
+            'has_child' => false,
+            'url' => '/members',
         ]);
         Menu::firstOrCreate([
-            'name' => 'items',
+            'name' => 'Items',
             'order' => 2,
             'icon' => 'test',
             'has_child' => true
         ]);
 
         Submenu::firstOrCreate([
-            'menu_id' => 1,
-            'name' => 'members',
-            'url' => '/members',
-            'order' => 1
-        ]);
-        Submenu::firstOrCreate([
             'menu_id' => 2,
-            'name' => 'books',
+            'name' => 'Books',
             'url' => '/books',
             'order' => 1
         ]);
         Submenu::firstOrCreate([
             'menu_id' => 2,
-            'name' => 'disks',
+            'name' => 'Disks',
             'url' => '/disks',
             'order' => 2
         ]);

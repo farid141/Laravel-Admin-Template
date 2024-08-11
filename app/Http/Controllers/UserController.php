@@ -20,6 +20,9 @@ class UserController extends Controller
      */
     public function index()
     {
+        if (!(request()->user()->can('viewAny~User')))
+            return abort(403, 'unauthorized access');
+
         $users = User::with(['roles'])->get();
         if (request()->ajax()) {
             return $users;
@@ -35,6 +38,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        if (!(request()->user()->can('view~User')))
+            return abort(403, 'unauthorized access');
+
         $validated = $request->validate([
             'name' => ['required', 'unique:users'],
             'role' => ['required', 'exists:roles,name'],
@@ -56,6 +62,9 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
+        if (!(request()->user()->can('update~User')))
+            return abort(403, 'unauthorized access');
+
         $user = User::with('roles')->find($id);
         return Response()->json($user);
     }
@@ -65,6 +74,9 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (!(request()->user()->can('update~User')))
+            return abort(403, 'unauthorized access');
+
         $validated = $request->validate([
             'name' => [
                 'required',
@@ -92,6 +104,9 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
+        if (!(request()->user()->can('delete~User')))
+            return abort(403, 'unauthorized access');
+
         $user = User::find($id);
         $user->delete();
 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Table - Mazer Admin Dashboard</title>
+    <title>Laravel Admin Panel</title>
 
     {{-- Zuramai Styles --}}
     <link rel="shortcut icon" href="{{ asset('/assets/compiled/svg/favicon.svg') }}" type="image/x-icon">
@@ -200,7 +200,9 @@
                         @php
                             use Illuminate\Support\Facades\Session;
                         @endphp
-                        {{ Session::get('page_title') }}
+                        <h2>
+                            {{ Session::get('page_title') }}
+                        </h2>
                     </div>
                 </div>
 
@@ -209,11 +211,11 @@
                 <footer>
                     <div class="footer clearfix mb-0 text-muted">
                         <div class="float-start">
-                            <p>2023 &copy; Mazer</p>
+                            <p>2024 &copy; Farid</p>
                         </div>
                         <div class="float-end">
                             <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-                                by <a href="https://saugi.me">Saugi</a></p>
+                                by <a href="https://saugi.me">Farid</a></p>
                         </div>
                     </div>
                 </footer>

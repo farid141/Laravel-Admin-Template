@@ -21,6 +21,9 @@ class MenuController extends Controller
      */
     public function index()
     {
+        if (!(request()->user()->can('viewAny~Menu-Menu')))
+            return abort(403, 'unauthorized access');
+
         $menus = Menu::with('submenus')->get();
         if (request()->ajax()) {
             return $menus;
@@ -36,6 +39,9 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
+        if (!(request()->user()->can('create~Menu-Menu')))
+            return abort(403, 'unauthorized access');
+
         $validated = $request->validate([
             'name' => ['required', 'unique:menus'],
             'order' => ['required', 'numeric',  'unique:menus,order'],
@@ -55,6 +61,9 @@ class MenuController extends Controller
 
     public function show(string $id)
     {
+        if (!(request()->user()->can('view~Menu-Menu')))
+            return abort(403, 'unauthorized access');
+
         $menu = Menu::with('submenus')->find($id);
         if (request()->ajax()) {
             return $menu->submenus;
@@ -68,6 +77,9 @@ class MenuController extends Controller
      */
     public function edit(string $id)
     {
+        if (!(request()->user()->can('update~Menu-Menu')))
+            return abort(403, 'unauthorized access');
+
         $menu = Menu::find($id);
         return Response()->json($menu);
     }
@@ -77,6 +89,9 @@ class MenuController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (!(request()->user()->can('update~Menu-Menu')))
+            return abort(403, 'unauthorized access');
+
         $validated = $request->validate([
             'name' => [
                 'required',
@@ -102,6 +117,9 @@ class MenuController extends Controller
      */
     public function destroy(string $id)
     {
+        if (!(request()->user()->can('delete~Menu-Menu')))
+            return abort(403, 'unauthorized access');
+
         $menu = Menu::find($id);
         $menu->delete();
 

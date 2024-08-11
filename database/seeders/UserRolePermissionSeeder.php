@@ -16,25 +16,47 @@ class UserRolePermissionSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            'view book',
-            'viewAny book',
-            'create book',
-            'update book',
-            'delete book'
+            'view~Menu-Menu',
+            'viewAny~Menu-Menu',
+            'create~Menu-Menu',
+            'update~Menu-Menu',
+            'delete~Menu-Menu',
+
+            'view~Menu-Submenu',
+            'viewAny~Menu-Submenu',
+            'create~Menu-Submenu',
+            'update~Menu-Submenu',
+            'delete~Menu-Submenu',
+
+            'view~Access-Permission',
+            'viewAny~Access-Permission',
+            'create~Access-Permission',
+            'update~Access-Permission',
+            'delete~Access-Permission',
+
+            'view~Access-Role',
+            'viewAny~Access-Role',
+            'create~Access-Role',
+            'update~Access-Role',
+            'delete~Access-Role',
+
+            'view~User',
+            'viewAny~User',
+            'create~User',
+            'update~User',
+            'delete~User',
         ];
 
         foreach ($permissions as $permission) {
             Permission::create(['name' => $permission]);
         }
 
-        $role = Role::create(['name' => 'writer']);
-        $role->givePermissionTo($permissions);
-
+        Role::create(['name' => 'admin']);
         $user = User::create([
-            'name' => 'farid',
-            'email' => 'farid@gmail.com',
-            'password' => Hash::make('12345')
+            'name' => 'admin',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('admin123')
         ]);
-        $user->assignRole('writer');
+        $user->assignRole('admin');
     }
 }

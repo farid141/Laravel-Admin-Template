@@ -21,6 +21,9 @@ class RoleController extends Controller
      */
     public function index()
     {
+        if (!(request()->user()->can('viewAny~Access-Role')))
+            return abort(403, 'unauthorized access');
+
         $roles = Role::all();
         if (request()->ajax()) {
             return $roles;
@@ -35,6 +38,9 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        if (!(request()->user()->can('view~Access-Role')))
+            return abort(403, 'unauthorized access');
+
         $validated = $request->validate([
             'name' => ['required', 'unique:roles'],
             'permissions' => ['required'],
@@ -53,6 +59,9 @@ class RoleController extends Controller
      */
     public function edit(string $id)
     {
+        if (!(request()->user()->can('update~Access-Role')))
+            return abort(403, 'unauthorized access');
+
         $role = Role::with('permissions')->find($id);
         return Response()->json($role);
     }
@@ -62,6 +71,9 @@ class RoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (!(request()->user()->can('update~Access-Role')))
+            return abort(403, 'unauthorized access');
+
         $validated = $request->validate([
             'name' => ['required', Rule::unique('roles', 'name')->ignore($id)],
             'permissions' => ['required'],
@@ -82,6 +94,9 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
+        if (!(request()->user()->can('delete~Access-Role')))
+            return abort(403, 'unauthorized access');
+
         $role = Role::find($id);
         $role->delete();
 

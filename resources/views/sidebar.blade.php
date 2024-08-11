@@ -5,6 +5,7 @@
     $menu_session = explode('-', Session::get('menu'));
     $menus = Menu::with('submenus')->get();
 
+    $is_admin = auth()->user()->hasRole('admin');
     $viewMenuPermissions[0] = [];
     $viewMenuPermissions[1] = [];
 
@@ -81,7 +82,7 @@
                 </li>
 
                 @foreach ($menus as $menu)
-                    @if (in_array($menu->name, $viewMenuPermissions[0]))
+                    @if (in_array($menu->name, $viewMenuPermissions[0]) || $is_admin)
                         <li
                             class="sidebar-item 
                         @if ($menu->has_child) has-sub @endif
@@ -94,7 +95,7 @@
                             @if ($menu->has_child)
                                 <ul class="submenu active">
                                     @foreach ($menu->submenus as $submenu)
-                                        @if (in_array($submenu->name, $viewMenuPermissions[1]))
+                                        @if (in_array($submenu->name, $viewMenuPermissions[1]) || $is_admin)
                                             <li
                                                 class="submenu-item 
                                         {{ isset($menu_session[1]) && $menu_session[1] == $submenu->name ? 'active' : '' }}">
@@ -111,7 +112,7 @@
 
                 {{-- Administration --}}
                 <li class="sidebar-title">Administration</li>
-                @if (in_array('Menu', $viewMenuPermissions[0]))
+                @if (in_array('Menu', $viewMenuPermissions[0]) || $is_admin)
                     <li class="sidebar-item has-sub @if ($menu_session[0] == 'Menu') active @endif">
                         <a href="#" class='sidebar-link'>
                             <i class="bi bi-stack"></i>
@@ -119,12 +120,12 @@
                         </a>
 
                         <ul class="submenu active">
-                            @if (in_array('Menu', $viewMenuPermissions[1]))
+                            @if (in_array('Menu', $viewMenuPermissions[1]) || $is_admin)
                                 <li class="submenu-item @if (isset($menu_session[1]) && $menu_session[1] == 'Menu') active @endif">
                                     <a href="/menu" class="submenu-link">Menu</a>
                                 </li>
                             @endif
-                            @if (in_array('Submenu', $viewMenuPermissions[1]))
+                            @if (in_array('Submenu', $viewMenuPermissions[1]) || $is_admin)
                                 <li class="submenu-item @if (isset($menu_session[1]) && $menu_session[1] == 'Submenu') active @endif">
                                     <a href="/submenu" class="submenu-link">Submenu</a>
                                 </li>
@@ -132,19 +133,19 @@
                         </ul>
                     </li>
                 @endif
-                @if (in_array('Access', $viewMenuPermissions[0]))
+                @if (in_array('Access', $viewMenuPermissions[0]) || $is_admin)
                     <li class="sidebar-item has-sub @if ($menu_session[0] == 'Access') active @endif">
                         <a href="#" class='sidebar-link'>
                             <i class="bi bi-lock-fill"></i>
                             <span>Access<span>
                         </a>
                         <ul class="submenu active">
-                            @if (in_array('Permission', $viewMenuPermissions[1]))
+                            @if (in_array('Permission', $viewMenuPermissions[1]) || $is_admin)
                                 <li class="submenu-item @if (isset($menu_session[1]) && $menu_session[1] == 'Permission') active @endif">
                                     <a href="/permission" class="submenu-link">Permission</a>
                                 </li>
                             @endif
-                            @if (in_array('Role', $viewMenuPermissions[1]))
+                            @if (in_array('Role', $viewMenuPermissions[1]) || $is_admin)
                                 <li class="submenu-item @if (isset($menu_session[1]) && $menu_session[1] == 'Role') active @endif">
                                     <a href="/role" class="submenu-link">Role</a>
                                 </li>
@@ -152,7 +153,7 @@
                         </ul>
                     </li>
                 @endif
-                @if (in_array('User', $viewMenuPermissions[0]))
+                @if (in_array('User', $viewMenuPermissions[0]) || $is_admin)
                     <li class="sidebar-item  @if ($menu_session[0] == 'User') active @endif">
                         <a href="/user" class='sidebar-link'>
                             <i class="bi bi-person-fill"></i>
