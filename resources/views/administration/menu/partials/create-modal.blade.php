@@ -5,7 +5,7 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Create Menu</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="create-menu-form" method="POST">
+            <form autocomplete="off" id="create-menu-form" method="POST" autocomplete="off">
                 @csrf
                 <div class="modal-body">
                     <div class="mb-3">

@@ -36,6 +36,156 @@
 
     <!-- Load the Latest Bootstrap Icons -->
     <link href="/assets/vendors/JqueryIconpicker/css/bootstrapicons-iconpicker.css" rel="stylesheet" />
+
+    <style>
+        /* Container styling */
+        html[data-bs-theme="dark"] .select2-container--default .select2-selection--multiple {
+            background-color: #333;
+            /* Dark background */
+            border: 1px solid #555;
+            /* Custom border color */
+            color: #fff;
+            /* Light text color */
+            min-height: 38px;
+            /* Ensure a minimum height */
+            border-radius: 4px;
+            /* Rounded corners */
+        }
+
+        /* Styling for selected items (tags) */
+        html[data-bs-theme="dark"] .select2-container--default .select2-selection__choice {
+            background-color: #444;
+            /* Darker background for selected items */
+            color: #fff;
+            /* Light text color for selected items */
+            border: 1px solid #555;
+            /* Border for selected items */
+        }
+
+        /* Hover effect for selected items */
+        html[data-bs-theme="dark"] .select2-container--default .select2-selection__choice:hover {
+            background-color: #555;
+            /* Slightly lighter on hover */
+            border-color: #666;
+            /* Change border on hover */
+        }
+
+        /* Styling for remove button (X) */
+        html[data-bs-theme="dark"] .select2-container--default .select2-selection__choice__remove {
+            color: #ddd;
+            /* Light color for the remove button */
+            margin-right: 5px;
+            /* Spacing from the text */
+        }
+
+        html[data-bs-theme="dark"] .select2-container--default .select2-selection__choice__remove:hover {
+            color: #fff;
+            /* Brighter color on hover */
+        }
+
+        /* Search box styling */
+        html[data-bs-theme="dark"] .select2-container--default .select2-search--inline .select2-search__field {
+            background-color: #333;
+            /* Match the background */
+            color: #fff;
+            /* Light text */
+            border: none;
+            /* Remove border */
+            outline: none;
+            /* Remove default focus outline */
+        }
+
+        /* Dropdown styling */
+        html[data-bs-theme="dark"] .select2-container--default .select2-dropdown {
+            background-color: #444;
+            /* Dark background for dropdown */
+            border: 1px solid #555;
+            /* Border color */
+            color: #fff;
+            /* Light text color */
+        }
+
+        /* Styling for dropdown items */
+        html[data-bs-theme="dark"] .select2-container--default .select2-results__option--selected {
+            padding: 8px 12px;
+            /* Padding for dropdown items */
+            background-color: #b4b4b4;
+        }
+
+        html[data-bs-theme="dark"] .select2-results__options {
+            padding: 0px;
+        }
+
+        /* Hover effect for dropdown items */
+        html[data-bs-theme="dark"] .select2-container--default .select2-results__option--highlighted {
+            background-color: #555;
+            /* Highlight background on hover */
+            color: #fff;
+            /* Ensure text is visible */
+        }
+
+        /* Disable autocomplete */
+        html[data-bs-theme="dark"] .select2-search__field {
+            autocomplete: off !important;
+        }
+    </style>
+    <style>
+        /* Dark theme overrides when data-bs-theme="dark" */
+        html[data-bs-theme="dark"] .iconpicker-popover.popover {
+            background-color: #1a1a1a;
+            /* Dark background color */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            /* Light border color */
+        }
+
+        html[data-bs-theme="dark"] .iconpicker-popover.popover .popover-title,
+        html[data-bs-theme="dark"] .iconpicker-popover .popover-footer {
+            background-color: #2a2a2a;
+            /* Dark background for title and footer */
+            color: #ffffff;
+            /* Light text color */
+            border-color: rgba(255, 255, 255, 0.2);
+            /* Light border color */
+        }
+
+        html[data-bs-theme="dark"] .iconpicker .iconpicker-items {
+            background: #2a2a2a;
+            /* Dark background for items */
+        }
+
+        html[data-bs-theme="dark"] .iconpicker .iconpicker-item {
+            box-shadow: 0 0 0 1px #555;
+            /* Darker shadow color */
+            color: #ffffff;
+            /* Light icon color */
+        }
+
+        html[data-bs-theme="dark"] .iconpicker .iconpicker-item:hover:not(.iconpicker-selected) {
+            background-color: #333;
+            /* Darker hover background */
+        }
+
+        html[data-bs-theme="dark"] .iconpicker .iconpicker-item.iconpicker-selected {
+            color: #ffffff;
+            /* Light color for selected icon */
+            background: #444;
+            /* Darker background for selected icon */
+        }
+
+        html[data-bs-theme="dark"] .iconpicker-popover.popover>.arrow,
+        html[data-bs-theme="dark"] .iconpicker-popover.popover>.arrow:after {
+            border-top-color: rgba(255, 255, 255, 0.25);
+            /* Light arrow color */
+        }
+
+        html[data-bs-theme="dark"] .iconpicker-popover.popover.top>.arrow:after,
+        html[data-bs-theme="dark"] .iconpicker-popover.popover.right>.arrow:after,
+        html[data-bs-theme="dark"] .iconpicker-popover.popover.bottom>.arrow:after,
+        html[data-bs-theme="dark"] .iconpicker-popover.popover.left>.arrow:after {
+            border-top-color: #1a1a1a;
+            /* Dark background color for arrow */
+        }
+    </style>
     @stack('styles')
 </head>
 
@@ -200,6 +350,12 @@
             formSelector.find('[type="checkbox"]').prop('checked', false);
             formSelector.find('option[value=""]').attr('selected', true);
         }
+
+        $('.select2').each(function() {
+            $(this).select2({
+                dropdownParent: $(this).closest('.modal')
+            });
+        });
     </script>
 
     {{-- toastify --}}

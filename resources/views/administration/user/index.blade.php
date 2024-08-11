@@ -19,6 +19,9 @@
         <tbody>
         </tbody>
     </table>
+
+    @include('administration.user.partials.create-modal')
+    @include('administration.user.partials.edit-modal')
 @endsection
 
 @push('scripts')
@@ -134,6 +137,3 @@
         });
     </script>
 @endpush
-
-@include('administration.user.partials.create-modal')
-@include('administration.user.partials.edit-modal')

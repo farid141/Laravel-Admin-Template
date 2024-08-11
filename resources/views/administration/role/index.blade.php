@@ -18,18 +18,15 @@
         <tbody>
         </tbody>
     </table>
+
+    @include('administration.role.partials.edit-modal')
+    @include('administration.role.partials.create-modal')
 @endsection
 
 @push('scripts')
     <script>
         var dt = null;
 
-        $('#create-permissions').select2({
-            dropdownParent: $('#create-role-modal')
-        });
-        $('#edit-permissions').select2({
-            dropdownParent: $('#edit-role-modal')
-        });
         // Datatable definition
         dt = $('.datatable').DataTable({
             ajax: {
@@ -138,5 +135,3 @@
         });
     </script>
 @endpush
-@include('administration.role.partials.edit-modal')
-@include('administration.role.partials.create-modal')

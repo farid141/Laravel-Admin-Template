@@ -17,6 +17,9 @@
         <tbody>
         </tbody>
     </table>
+
+    @include('administration.permission.partials.create-modal')
+    @include('administration.permission.partials.edit-modal')
 @endsection
 
 @push('scripts')
@@ -124,6 +127,3 @@
         });
     </script>
 @endpush
-
-@include('administration.permission.partials.create-modal')
-@include('administration.permission.partials.edit-modal')

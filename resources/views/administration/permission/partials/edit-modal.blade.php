@@ -6,7 +6,7 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Edit permission</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="edit-permission-form" method="POST">
+            <form autocomplete="off" id="edit-permission-form" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
@@ -14,8 +14,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="edit-name">Permission Name:</label>
-                            <input id="edit-name" type="text" placeholder="Permission Name" class="form-control"
-                                name="name" required>
+                            <input id="edit-name" type="text" class="form-control" name="name" required>
                         </div>
                     </div>
                 </div>

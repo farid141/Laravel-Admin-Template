@@ -6,13 +6,12 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Create Permission</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="create-permission-form" method="POST">
+            <form autocomplete="off" id="create-permission-form" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="create-name">Permission Name:</label>
-                        <input id="create-name" type="text" placeholder="Permission Name" class="form-control"
-                            name="name" required>
+                        <input id="create-name" type="text" class="form-control" name="name" required>
                     </div>
                     <div class="input-group mb3">
                         @foreach ($actions as $action)

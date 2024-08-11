@@ -5,13 +5,12 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Create user</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="create-user-form" method="POST">
+            <form autocomplete="off" id="create-user-form" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="create-name">User Name:</label>
-                        <input id="create-name" type="text" placeholder="User Name" class="form-control"
-                            name="name" required>
+                        <input id="create-name" type="text" class="form-control" name="name" required>
                     </div>
                     <div class="mb-3">
                         <label for="create-role">Role:</label>
@@ -23,8 +22,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="create-email">Email:</label>
-                        <input id="create-email" type="email" placeholder="Email" class="form-control" name="email"
-                            required>
+                        <input id="create-email" type="email" class="form-control" name="email" required>
                     </div>
                     <div class="mb-3">
                         <label for="create-password">Password:</label>

@@ -15,4 +15,12 @@ class Menu extends Model
     {
         return $this->hasMany(Submenu::class);
     }
+
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime:Y-m-d H:i:s',
+            'updated_at' => 'datetime:Y-m-d H:i:s',
+        ];
+    }
 }

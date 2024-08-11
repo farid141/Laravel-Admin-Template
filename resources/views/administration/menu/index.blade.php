@@ -11,6 +11,8 @@
                 <th>Name</th>
                 <th>Icon</th>
                 <th>Order</th>
+                <th>Has Child</th>
+                <th>URL</th>
                 <th>Created at</th>
                 <th>Updated at</th>
                 <th>Actions</th>
@@ -52,6 +54,12 @@
                 },
                 {
                     data: 'order'
+                },
+                {
+                    data: 'has_child'
+                },
+                {
+                    data: 'url'
                 },
                 {
                     data: 'created_at'

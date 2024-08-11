@@ -5,7 +5,7 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Edit menu</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="edit-menu-form" method="POST">
+            <form autocomplete="off" id="edit-menu-form" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">

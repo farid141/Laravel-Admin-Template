@@ -5,20 +5,20 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Role</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="edit-role-form" method="POST">
+            <form autocomplete="off" id="edit-role-form" method="POST">
                 @csrf
                 <div class="modal-body">
                     <input hidden name="_method" required value="PUT">
 
                     <div class="mb-3">
                         <label for="edit-name">Role Name:</label>
-                        <input id="edit-name" type="text" placeholder="Role Name" class="form-control" name="name"
-                            required>
+                        <input id="edit-name" type="text" class="form-control" name="name" required>
                     </div>
 
                     <div>
                         <label for="edit-permissions">Permissions</label>
-                        <select id="edit-permissions" multiple="multiple" style="width: 100%;" name="permissions[]">
+                        <select id="edit-permissions" multiple="multiple" style="width: 100%;" name="permissions[]"
+                            class="select2">
                             @foreach ($permissions as $permission)
                                 <option value="{{ $permission }}">{{ $permission }}</option>
                             @endforeach

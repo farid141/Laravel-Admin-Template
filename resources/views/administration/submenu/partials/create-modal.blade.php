@@ -6,12 +6,13 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Create Submenu</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="create-submenu-form" method="POST">
+            <form autocomplete="off" id="create-submenu-form" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="create-menu_id">Menu Name:</label>
                         <select name="menu_id" id="create-menu_id" class="form-select">
+                            <option value=""></option>
                             @foreach ($menus as $menu)
                                 <option value="{{ $menu->id }}">{{ $menu->name }}</option>
                             @endforeach
@@ -20,20 +21,18 @@
 
                     <div class="mb-3">
                         <label for="create-name">Submenu Name:</label>
-                        <input type="text" placeholder="Submenu Name" class="form-control" name="name"
-                            id="create-name" required>
+                        <input type="text" class="form-control" name="name" id="create-name" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="create-url">URL:</label>
-                        <input type="text" placeholder="URL" class="form-control" name="url" id="create-url"
-                            required>
+                        <input type="text" class="form-control" name="url" id="create-url" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="create-order">Order:</label>
-                        <input type="number" min="0" placeholder="Order" class="form-control" name="order"
-                            id="create-order" required>
+                        <input type="number" min="0" class="form-control" name="order" id="create-order"
+                            required>
                     </div>
 
                     <label for="permission-name">Permission Name</label>

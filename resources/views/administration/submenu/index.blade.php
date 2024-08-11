@@ -20,6 +20,10 @@
         <tbody>
         </tbody>
     </table>
+
+
+    @include('administration.submenu.partials.create-modal')
+    @include('administration.submenu.partials.edit-modal')
 @endsection
 
 @push('scripts')
@@ -138,6 +142,3 @@
         });
     </script>
 @endpush
-
-@include('administration.submenu.partials.create-modal')
-@include('administration.submenu.partials.edit-modal')
