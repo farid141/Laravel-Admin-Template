@@ -117,8 +117,8 @@
             var formData = new FormData(this);
             var url = "{{ route('user.destroy', ['user' => ':id']) }}".replace(':id', id);
 
-            confirmationModal().then((willDelete) => {
-                if (willDelete) {
+            confirmationModal().then((res) => {
+                if (res.isConfirmed) {
                     $.ajax({
                         type: 'POST',
                         url: url,

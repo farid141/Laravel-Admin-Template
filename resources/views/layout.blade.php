@@ -130,6 +130,7 @@
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
+                showCancelButton: true,
             });
         }
 

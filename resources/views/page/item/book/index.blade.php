@@ -1,6 +1,6 @@
 @extends('layout')
 @section('content')
     <div>
-        this is disk page
+        this is book page
     </div>
 @endsection

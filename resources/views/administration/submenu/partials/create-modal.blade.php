@@ -82,13 +82,11 @@
             }
         });
 
-        // ***************************
-        // FORM Create submenu SUBMITTED
-        // ***************************
         $('#create-submenu-form').submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);
             var formElement = $(this);
+            removeErrorMessages(formElement);
 
             $.ajax({
                 type: 'POST',

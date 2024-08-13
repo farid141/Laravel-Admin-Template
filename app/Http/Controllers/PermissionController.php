@@ -84,7 +84,7 @@ class PermissionController extends Controller
         $permission->update($validated);
 
         return Response()->json([
-            'content' => 'Permission ' . $permission['name'] . ' created!',
+            'content' => 'Permission ' . $permission['name'] . ' updated!',
             'type' => 'success' // or 'error'
         ]);
     }

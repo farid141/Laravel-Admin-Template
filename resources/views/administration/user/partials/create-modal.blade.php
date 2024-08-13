@@ -61,6 +61,7 @@
             e.preventDefault();
             var formData = new FormData(this);
             var formElement = $(this);
+            removeErrorMessages(formElement);
 
             $.ajax({
                 type: 'POST',

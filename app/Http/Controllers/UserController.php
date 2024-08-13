@@ -52,7 +52,7 @@ class UserController extends Controller
             ->syncRoles([$request['role']]);
 
         return Response()->json([
-            'content' => 'user ' . $validated['name'] . ' added!',
+            'content' => 'user ' . $validated['name'] . ' created!',
             'type' => 'success' // or 'error'
         ]);
     }
@@ -87,7 +87,7 @@ class UserController extends Controller
                 Rule::unique('users', 'email')->ignore($id)
             ],
             'role' => ['required', 'exists:roles,name'],
-            'password' => ['required', 'confirmed', 'min:5'],
+            'password' => 'sometimes|confirmed|min:5',
         ]);
 
         $user = User::find($id);
@@ -95,7 +95,7 @@ class UserController extends Controller
         $user->update(collect($request)->only(['name', 'email', 'password'])->toArray());
 
         return Response()->json([
-            'content' => 'user updated!',
+            'content' => "user {$user->name} updated!",
             'type' => 'success' // or 'error'
         ]);
     }

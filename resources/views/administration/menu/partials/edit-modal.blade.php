@@ -54,6 +54,7 @@
             var id = $(this).attr('data-id');
             var url = "{{ route('menu.update', ['menu' => ':id']) }}".replace(':id', id);
             var formElement = $(this);
+            removeErrorMessages(formElement);
 
             $.ajax({
                 type: 'POST',

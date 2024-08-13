@@ -26,10 +26,14 @@
                         <input id="edit-email" type="email" class="form-control" name="email" required>
                     </div>
                     <div class="mb-3">
+                        <input class="form-check-input" type="checkbox" id="check-edit-password">
+                        <label class="form-check-label" for="check-edit-password">Edit password?</label>
+                    </div>
+                    <div class="mb-3">
                         <label for="edit-password">Password:</label>
                         <div class="input-group">
                             <input id="edit-password" type="password" class="form-control password" name="password"
-                                required>
+                                disabled>
                             <span class="input-group-text toggle-password" style="cursor: pointer">
                                 <i class="bi bi-eye-slash" id="toggleIcon"></i>
                             </span>
@@ -39,7 +43,7 @@
                         <label for="edit-password_confirmation">Confirm Password:</label>
                         <div class="input-group">
                             <input id="edit-password_confirmation" type="password" class="form-control password"
-                                name="password_confirmation" required>
+                                name="password_confirmation" disabled>
                             <span class="input-group-text toggle-password" style="cursor: pointer">
                                 <i class="bi bi-eye-slash" id="toggleIcon"></i>
                             </span>
@@ -61,9 +65,10 @@
         $('#edit-user-form').submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);
-            var id = $(this).data('id');
+            var id = $(this).attr('data-id');
             var url = "{{ route('user.update', ['user' => ':id']) }}".replace(':id', id);
             var formElement = $(this);
+            removeErrorMessages(formElement);
 
             $.ajax({
                 type: 'POST',
@@ -78,6 +83,11 @@
                     dt.ajax.reload(null, false); // reload datatable
                     removeErrorMessages(formElement);
                     emptyForm(formElement);
+
+                    $('#edit-password').val('');
+                    $('#edit-password').attr('disabled', true);
+                    $('#edit-password_confirmation').val('');
+                    $('#edit-password_confirmation').attr('disabled', true);
                 },
                 error: function(xhr) {
                     // error laravel validation
@@ -96,6 +106,18 @@
                     });
                 }
             });
+        });
+
+        $('#check-edit-password').click(function() {
+            if ($(this).prop('checked')) {
+                $('#edit-password').removeAttr('disabled');
+                $('#edit-password_confirmation').removeAttr('disabled');
+            } else {
+                $('#edit-password').val('');
+                $('#edit-password').attr('disabled', true);
+                $('#edit-password_confirmation').val('');
+                $('#edit-password_confirmation').attr('disabled', true);
+            }
         });
     </script>
 @endpush
