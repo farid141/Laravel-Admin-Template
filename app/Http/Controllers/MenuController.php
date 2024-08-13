@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Permission;
 
 class MenuController extends Controller
 {
@@ -31,7 +32,8 @@ class MenuController extends Controller
 
         $iconPath = public_path('assets/extensions/bootstrap-icons/icons');
         $icons = File::allFiles($iconPath);
-        return view('administration.menu.index', compact('menus', 'icons'));
+        $permissions = ['view', 'viewAny', 'create', 'update', 'delete'];
+        return view('administration.menu.index', compact('menus', 'icons', 'permissions'));
     }
 
     /**
@@ -52,6 +54,18 @@ class MenuController extends Controller
 
         $validated['has_child'] = $request->has('has_child') ? 1 : 0;
         Menu::create($validated);
+
+        if ($request['create-permission']) {
+            $permission_name = $request['permission-name'];
+            if ($request['permissions'] && $permission_name) {
+                $permission_in_database = Permission::all('name')->pluck('name')->toArray();
+                foreach ($request['permissions'] as $permission) {
+                    // if permission isnt exist, create it
+                    if (!in_array("$permission~$permission_name", $permission_in_database))
+                        Permission::create(['name' => "$permission~$permission_name"]);
+                }
+            }
+        }
 
         return Response()->json([
             'content' => 'menu created!',

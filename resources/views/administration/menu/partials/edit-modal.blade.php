@@ -48,10 +48,10 @@
 
 @push('scripts')
     <script>
-        $('#edit-menu-form').submit(function(e) {
+        $('#edit-menu-form').on('submit', function(e) {
             e.preventDefault();
             var formData = new FormData(this);
-            var id = $(this).data('id');
+            var id = $(this).attr('data-id');
             var url = "{{ route('menu.update', ['menu' => ':id']) }}".replace(':id', id);
             var formElement = $(this);
 

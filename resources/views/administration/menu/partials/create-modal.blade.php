@@ -1,5 +1,5 @@
 <div class="modal fade" id="create-menu-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Create Menu</h1>
@@ -34,6 +34,30 @@
                         <label for="create-url">Url</label>
                         <input type="text" id="create-url" class="form-control" aria-describedby="create-url"
                             name="url">
+                    </div>
+
+                    <div class="mb-3">
+                        <input class="form-check-input" type="checkbox" name="create-permission" id="create-permission">
+                        <label class="form-check-label" for="create-permission">Create Permission?</label>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="permission-name">Permission Name:</label>
+                        <div class="text-danger m-0">* Don't use '~' character</div>
+                        <div class="text-danger m-0">* format: Menu-Submenu</div>
+                        <input type="text" class="form-control" name="permission-name" id="permission-name" disabled>
+                    </div>
+
+                    <div class="mb3" id="permission-list">
+                        @foreach ($permissions as $permission)
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox"
+                                    id="{{ $permission }}-permission-checkbox" name="permissions[]"
+                                    value="{{ $permission }}" disabled>
+                                <label class="form-check-label"
+                                    for="{{ $permission }}-permission-checkbox">{{ $permission }}</label>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
 
@@ -83,6 +107,18 @@
                     });
                 }
             });
+        });
+
+        $('#create-permission').click(function() {
+            if ($(this).prop('checked')) {
+                $('#permission-name').removeAttr('disabled');
+                $('#permission-list .form-check-input').attr('disabled', false);
+            } else {
+                $('#permission-name').val('');
+                $('#permission-name').attr('disabled', true);
+                $('#permission-list .form-check-input').prop('checked', false);
+                $('#permission-list .form-check-input').attr('disabled', true);
+            }
         });
 
         $('#create-has_child').on('click', function() {

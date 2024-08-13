@@ -25,24 +25,26 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="create-url">URL:</label>
-                        <input type="text" class="form-control" name="url" id="create-url" required>
-                    </div>
-
-                    <div class="mb-3">
                         <label for="create-order">Order:</label>
                         <input type="number" min="0" class="form-control" name="order" id="create-order"
                             required>
                     </div>
 
-                    <label for="permission-name">Permission Name</label>
-                    <div class="text-danger m-0">* Don't use '~' character</div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-text">
-                            <input class="form-check-input mt-0" type="checkbox" value="create-permission"
-                                name="create-permission" id="permission-checkbox">
-                        </div>
-                        <input id="permission-name" class="form-control" name="permission-name" type="text" disabled>
+                    <div class="mb-3">
+                        <label for="create-url">URL:</label>
+                        <input type="text" class="form-control" name="url" id="create-url" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <input class="form-check-input" type="checkbox" name="create-permission" id="create-permission">
+                        <label class="form-check-label" for="create-permission">Create Permission?</label>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="permission-name">Permission Name:</label>
+                        <div class="text-danger m-0">* Don't use '~' character</div>
+                        <div class="text-danger m-0">* format: Menu-Submenu</div>
+                        <input type="text" class="form-control" name="permission-name" id="permission-name" disabled>
                     </div>
 
                     <div class="mb3" id="permission-list">
@@ -68,7 +70,7 @@
 
 @push('scripts')
     <script>
-        $('#permission-checkbox').click(function() {
+        $('#create-permission').click(function() {
             if ($(this).prop('checked')) {
                 $('#permission-name').removeAttr('disabled');
                 $('#permission-list .form-check-input').attr('disabled', false);

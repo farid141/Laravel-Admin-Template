@@ -206,7 +206,8 @@
             const csrfToken = formSelector.find('input[name="_token"]').val();
 
             // Clear other form fields
-            formSelector.find('[name]').val('');
+            formSelector.find('[type="text"]').val('');
+            formSelector.find('[type="number"]').val('');
             formSelector.find('[type="checkbox"]').prop('checked', false);
             formSelector.find('option[value=""]').attr('selected', true);
 

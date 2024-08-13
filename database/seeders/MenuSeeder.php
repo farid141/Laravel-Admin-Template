@@ -17,14 +17,14 @@ class MenuSeeder extends Seeder
         Menu::firstOrCreate([
             'name' => 'Members',
             'order' => 1,
-            'icon' => 'test',
+            'icon' => 'bi bi-file-person',
             'has_child' => false,
             'url' => '/members',
         ]);
         Menu::firstOrCreate([
             'name' => 'Items',
             'order' => 2,
-            'icon' => 'test',
+            'icon' => 'bi bi-box-seam',
             'has_child' => true
         ]);
 
