@@ -28,9 +28,8 @@
 
 @push('scripts')
     <script>
-        var dt = null;
         // Datatable definition
-        dt = $('.datatable').DataTable({
+        var dt = $('.datatable').DataTable({
             ajax: {
                 url: '{!! route('submenu.index') !!}',
                 dataSrc: ''
@@ -87,8 +86,8 @@
         $('#edit-submenu-modal').on('shown.bs.modal', (e) => {
             var id = $(e.relatedTarget).data('id');
             $('#edit-submenu-form').attr('data-id', id); //set form's data-id
-
             var url = "{{ route('submenu.edit', ['submenu' => ':id']) }}".replace(':id', id);
+
             $.ajax({
                 type: "GET",
                 url: url,

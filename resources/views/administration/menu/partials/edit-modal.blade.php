@@ -89,6 +89,7 @@
             });
         });
 
+        // checkbox has_child diklik (UX)
         $('#edit-has_child').on('click', function() {
             if ($(this).prop('checked')) {
                 $('#edit-url').attr('disabled', true);

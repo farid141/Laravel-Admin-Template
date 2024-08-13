@@ -1,4 +1,3 @@
-<!-- Modal create -->
 <div class="modal fade" id="create-submenu-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -95,11 +94,11 @@
                 contentType: false,
                 processData: false,
                 success: (data) => {
-                    showToast(data);
                     $("#create-submenu-modal").modal('hide');
                     dt.ajax.reload(null, false); // refresh datatable
                     removeErrorMessages(formElement);
                     emptyForm(formElement);
+                    showToast(data);
                 },
                 error: function(xhr) {
                     // error laravel validation

@@ -90,7 +90,6 @@
                     $('#edit-password_confirmation').attr('disabled', true);
                 },
                 error: function(xhr) {
-                    // error laravel validation
                     if (xhr.status === 422) {
                         let errors = xhr.responseJSON.errors;
                         displayErrorMessages(errors, formElement, 'edit');

@@ -24,9 +24,8 @@
 
 @push('scripts')
     <script>
-        var dt = null;
         // Datatable definition
-        dt = $('.datatable').DataTable({
+        var dt = $('.datatable').DataTable({
             ajax: {
                 url: '{!! route('permission.index') !!}',
                 dataSrc: ''

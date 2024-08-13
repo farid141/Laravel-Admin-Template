@@ -92,7 +92,6 @@
                     emptyForm(formElement);
                 },
                 error: function(xhr) {
-                    // error laravel validation
                     if (xhr.status === 422) {
                         let errors = xhr.responseJSON.errors;
                         displayErrorMessages(errors, formElement, 'create');
@@ -110,6 +109,7 @@
             });
         });
 
+        // checkbox create-permission diklik (UX)
         $('#create-permission').click(function() {
             if ($(this).prop('checked')) {
                 $('#permission-name').removeAttr('disabled');
@@ -122,6 +122,7 @@
             }
         });
 
+        // checkbox has_child diklik (UX)
         $('#create-has_child').on('click', function() {
             if ($(this).prop('checked')) {
                 $('#create-url').attr('disabled', true);

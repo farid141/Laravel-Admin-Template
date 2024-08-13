@@ -1,4 +1,3 @@
-<!-- Modal Edit -->
 <div class="modal fade" id="edit-permission-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -52,7 +51,6 @@
                     removeErrorMessages(formElement);
                 },
                 error: function(xhr) {
-                    // error laravel validation
                     if (xhr.status === 422) {
                         let errors = xhr.responseJSON.errors;
                         displayErrorMessages(errors, formElement, 'edit');

@@ -54,7 +54,6 @@
                     emptyForm(formElement);
                 },
                 error: function(xhr) {
-                    // error laravel validation
                     if (xhr.status == 422) {
                         let errors = xhr.responseJSON.errors;
                         displayErrorMessages(errors, formElement, 'create');

@@ -85,7 +85,6 @@
                     removeErrorMessages(formElement);
                 },
                 error: function(xhr) {
-                    // validation exception
                     if (xhr.status == 422) {
                         let errors = xhr.responseJSON.errors;
                         displayErrorMessages(errors, formElement, 'create');

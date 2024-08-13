@@ -28,12 +28,8 @@
 
 @push('scripts')
     <script>
-        var dt = null;
-        var editIconpicker = null;
-        var createIconpicker = null;
-
         // Datatable definition
-        dt = $('.datatable').DataTable({
+        var dt = $('.datatable').DataTable({
             ajax: {
                 url: '{!! route('menu.index') !!}',
                 dataSrc: ''
