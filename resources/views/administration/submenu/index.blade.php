@@ -36,6 +36,9 @@
             },
             columns: [{
                     data: null,
+                    createdCell: function(td, cellData, rowData, row, col) {
+                        $(td).addClass('text-nowrap');
+                    }
                     width: 20,
                     render: (data, type, row, meta) => {
                         return meta.row + 1;
@@ -43,25 +46,47 @@
                     orderable: true,
                 },
                 {
-                    data: 'name'
+                    data: 'name',
+                    createdCell: function(td, cellData, rowData, row, col) {
+                        $(td).addClass('text-nowrap');
+                    }
                 },
                 {
-                    data: 'menu.name'
+                    data: 'menu.name,
+                    createdCell: function(td, cellData, rowData, row, col) {
+                        $(td).addClass('text-nowrap');
+                    }
+                    '
                 },
                 {
-                    data: 'url'
+                    data: 'url',
+                    createdCell: function(td, cellData, rowData, row, col) {
+                        $(td).addClass('text-nowrap');
+                    }
                 },
                 {
-                    data: 'order'
+                    data: 'order',
+                    createdCell: function(td, cellData, rowData, row, col) {
+                        $(td).addClass('text-nowrap');
+                    }
                 },
                 {
-                    data: 'created_at'
+                    data: 'created_at',
+                    createdCell: function(td, cellData, rowData, row, col) {
+                        $(td).addClass('text-nowrap');
+                    }
                 },
                 {
-                    data: 'updated_at'
+                    data: 'updated_at',
+                    createdCell: function(td, cellData, rowData, row, col) {
+                        $(td).addClass('text-nowrap');
+                    }
                 },
                 {
                     data: 'id',
+                    createdCell: function(td, cellData, rowData, row, col) {
+                        $(td).addClass('text-nowrap');
+                    },
                     render: (data, type, row, meta) => {
                         const btn_edit =
                             `<button type="button" class="btn btn-warning" data-bs-toggle="modal"

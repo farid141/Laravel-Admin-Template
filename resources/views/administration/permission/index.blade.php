@@ -32,6 +32,9 @@
             },
             columns: [{
                     data: null,
+                    createdCell: function(td, cellData, rowData, row, col) {
+                        $(td).addClass('text-nowrap');
+                    }
                     width: 20,
                     render: (data, type, row, meta) => {
                         return meta.row + 1;
@@ -39,19 +42,34 @@
                     orderable: false,
                 },
                 {
-                    data: 'name'
+                    data: 'name',
+                    createdCell: function(td, cellData, rowData, row, col) {
+                        $(td).addClass('text-nowrap');
+                    }
                 },
                 {
-                    data: 'guard_name'
+                    data: 'guard_name',
+                    createdCell: function(td, cellData, rowData, row, col) {
+                        $(td).addClass('text-nowrap');
+                    }
                 },
                 {
-                    data: 'created_at'
+                    data: 'created_at',
+                    createdCell: function(td, cellData, rowData, row, col) {
+                        $(td).addClass('text-nowrap');
+                    }
                 },
                 {
-                    data: 'updated_at'
+                    data: 'updated_at',
+                    createdCell: function(td, cellData, rowData, row, col) {
+                        $(td).addClass('text-nowrap');
+                    }
                 },
                 {
                     data: 'id',
+                    createdCell: function(td, cellData, rowData, row, col) {
+                        $(td).addClass('text-nowrap');
+                    },
                     render: (data, type, row, meta) => {
                         const btn_edit =
                             `<button type="button" class="btn btn-warning" data-bs-toggle="modal"
